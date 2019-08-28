@@ -5,7 +5,7 @@
 # See LICENSE file for full copyright and licensing details.
 #################################################################################
 
-from odoo import fields, models
+from odoo import fields, models,api
 from odoo import models
 from odoo.tools.translate import _
 import logging
@@ -14,6 +14,12 @@ _logger = logging.getLogger(__name__)
 class website(models.Model):
 	_inherit = 'website'
 
+	redirect_to_cart =  fields.Selection([('same','Same Page'),('cart','Cart Summary')], string='Redirect page after adding to cart',default='same')
+	sub_total = fields.Boolean(string = 'Show Subtotal of Order Lines')
+	minimum_order_value = fields.Float(string = 'Minimum Cart Value To Validate Order')
+	c_id = fields.Many2one('res.currency', 'Currency',default=lambda self: self.env.user.company_id.currency_id.id,required=True)
+
+	
 	def check_redirect_to(self, cr, uid, ids, context=None):
 		redirect_to_cart = 'same' if self.env['ir.default'].sudo().get('advance.website.settings', 'redirect_to_cart') == None else self.env['ir.default'].sudo().get('advance.website.settings', 'redirect_to_cart')
 		if redirect_to_cart == 'same':

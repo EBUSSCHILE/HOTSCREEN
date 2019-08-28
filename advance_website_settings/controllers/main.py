@@ -28,8 +28,8 @@ class website_sale(WebsiteSale):
 			wk_page_url = '/shop/product/%s' % slug(product.product_tmpl_id)
 
 
-		ir_values = 'same' if request.env['ir.default'].sudo().get('advance.website.settings', 'redirect_to_cart') == None else request.env['ir.default'].sudo().get('advance.website.settings', 'redirect_to_cart')
-
+		ir_values = 'same' if request.env['website'].sudo().get_current_website().redirect_to_cart == False else request.env['website'].sudo().get_current_website().redirect_to_cart
+		
 		if ir_values == 'same':
 			url = wk_page_url
 		else:

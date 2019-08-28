@@ -17,12 +17,10 @@
   "live_test_url"        :  "http://odoodemo.webkul.com/?module=advance_website_settings&version=12.0",
   "depends"              :  [
                              'website_sale',
-                             'website_webkul_addons',
                             ],
   "data"                 :  [
-                             'views/advance_website_settings_view.xml',
-                             'views/webkul_addons_config_inherit_view.xml',
-                             'views/template.xml',
+                            'views/template.xml',
+                             'views/website.xml',
                             ],
   "images"               :  ['static/description/Banner.png'],
   "application"          :  True,
