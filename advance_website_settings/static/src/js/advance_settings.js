@@ -7,12 +7,13 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
     var _t = core._t;
     $(document).ready(function(){
         $('.oe_website_sale').on('click', 'a[href$="/shop/checkout?express=1"]', function (ev)
-        {
-            var conf_value = $(this).find('.wk_cart_values').attr('conf_value');
+        {   
+            console.log($(this))
+            var conf_value = $('.oe_website_sale').find('.wk_cart_values').attr('conf_value');
             var cart_value = $('#order_total span.oe_currency_value').text();
             var cart_value = cart_value.replace(",", "");
             var cart_value = parseFloat(cart_value);
-            var currency_symbol = $(this).find('.wk_cart_values').attr('currency_symbol');
+            var currency_symbol = $('.oe_website_sale').find('.wk_cart_values').attr('currency_symbol');
             var $link = $(this);
             if (cart_value<conf_value)
             {
