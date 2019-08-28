@@ -8,7 +8,7 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
     $(document).ready(function(){
         $('.oe_website_sale').on('click', 'a[href$="/shop/checkout?express=1"]', function (ev)
         {   
-            console.log($(this))
+            
             var conf_value = $('.oe_website_sale').find('.wk_cart_values').attr('conf_value');
             var cart_value = $('#order_total span.oe_currency_value').text();
             var cart_value = cart_value.replace(",", "");
