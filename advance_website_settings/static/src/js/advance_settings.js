@@ -3,6 +3,8 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
 "use strict";
     var base = require('web_editor.base');
     var ajax = require('web.ajax');
+    var core = require('web.core');
+    var _t = core._t;
     $(document).ready(function(){
         $('.oe_website_sale').on('click', 'a[href$="/shop/checkout?express=1"]', function (ev)
         {
@@ -21,7 +23,7 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
                   placement:"top",
                   trigger:'focus',
                 });
-                $(this).attr('data-content',"A minimum purchase total of "+ currency_symbol+" "+ conf_value+" is required to validate your order, current purchase total is "+ currency_symbol+" "+ cart_value);
+                $(this).attr('data-content',_t("A minimum purchase total of ")+ currency_symbol+" "+ conf_value+_t(" is required to validate your order, current purchase total is ")+ currency_symbol+" "+ cart_value);
                 $(this).popover('show');
 
             }
