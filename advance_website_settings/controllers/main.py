@@ -41,4 +41,12 @@ class website_sale(WebsiteSale):
 		attributes=self._filter_attributes(**kw),
 		)
 		return request.redirect(url)
-			
+
+	@http.route(["/website/wk_lang"], type='json', auth="public", methods=['POST'], website=True)
+	def website_langauge(self, code, **kw):
+		lang_id = request.env['res.lang'].search([('code','=',code.replace('-','_'))])
+		return {
+			'sep_format': lang_id.grouping,
+			'decimal_point': lang_id.decimal_point,
+			'thousands_sep': lang_id.thousands_sep
+		}

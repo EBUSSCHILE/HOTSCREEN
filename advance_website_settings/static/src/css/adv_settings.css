@@ -14,3 +14,7 @@
 .total-sum{
   color: #c52c2c;
 }
+table#cart_products tbody tr td {
+    padding: 0.3rem !important;
+    /* color:red; */
+}
