@@ -5,6 +5,7 @@
 # See LICENSE file for full copyright and licensing details.
 #################################################################################
 from odoo import api, fields, models
+from odoo.http import request
 import logging
 _log = logging.getLogger(__name__)
 class SaleOrderLine(models.Model):
@@ -36,13 +37,10 @@ class SaleOrder(models.Model):
 		return True if ir_default == None else ir_default
 	def get_minimun_cart_value(self):
 		
-		ir_default = self.env['website'].sudo().get_current_website().c_id._convert(
-                    self.env['website'].sudo().get_current_website().minimum_order_value, self.env['website'].sudo().get_current_pricelist().currency_id, self.env.user.company_id,
+		ir_default = self.env['website'].get_current_website().c_id._convert(
+                    self.env['website'].get_current_website().minimum_order_value, request.env['website'].get_current_website().pricelist_id.currency_id, self.env.user.company_id,
                     fields.Date.today()
                     )
-		
-        
-
 		
 		return 1 if ir_default == None else round(ir_default, 2)
 	@api.model

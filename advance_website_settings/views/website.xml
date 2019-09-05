@@ -16,17 +16,20 @@
                             <field name='redirect_to_cart' widget='radio'/>
                         </group>
                         <group>
-                            <field name="c_id" invisible="1"/>
-                            <field name='minimum_order_value' widget='monetary' options="{'currency_field': 'c_id'}" />
-                        </group>
+                            <label for='c_id' string='Minimum Order Value'/>
+                                <div class='d-flex flex-column'>
+                                    <field name="c_id" />
+                                    <field name='minimum_order_value' widget='monetary' options="{'currency_field': 'c_id'}" />
+                                </div>
+                            </group>
 
-                        <group>
-                            <field name='sub_total'/>
+                            <group>
+                                <field name='sub_total'/>
 
+                            </group>
                         </group>
-                    </group>
-                </div>
-            </field>
-        </record>
-    </data>
-</odoo>
+                    </div>
+                </field>
+            </record>
+        </data>
+    </odoo>

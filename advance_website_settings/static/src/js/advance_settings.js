@@ -9,20 +9,36 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
     var _t = core._t;
 
     $(document).ready(function(){
+      var code = $('html').attr('lang');
+      var constraints;
+      $('.oe_website_sale').find('.wk_cart_values').hide()
+
+      try {
+        ajax.jsonRpc('/website/wk_lang','call',{
+          'code': code
+        })
+        .then(function(res){
+         
+          constraints=res;
+        });
+
+      } catch (e) {
+        console.error(e);
+      }
+
         $('.oe_website_sale').on('click', 'a[href$="/shop/checkout?express=1"]', function (ev)
         {   
-            
-            var conf_value = $('.oe_website_sale').find('.wk_cart_values').attr('conf_value');
-            var cart_value = $('#order_total span.oe_currency_value').text();
-            var cart_value = cart_value.replace(",", "");
-            var cart_value = parseFloat(cart_value);
-            var currency_symbol = $('.oe_website_sale').find('.wk_cart_values').attr('currency_symbol');
+          var conf_value = $('.oe_website_sale').find('.wk_cart_values').text();
+          var cart_value = $('#order_total span.oe_currency_value').text();
+          var cart=parseFloat(cart_value.replace(constraints.thousands_sep,'').replace(constraints.decimal_point,'.'))
+          var check=parseFloat(conf_value.replace(constraints.thousands_sep,'').replace(constraints.decimal_point,'.'))
+          var currency_symbol = $('.oe_website_sale').find('.wk_cart_values').attr('currency_symbol');
             var $link = $(this);
-            if (cart_value<conf_value)
+            if (cart<check)
             {
                 ev.preventDefault();
                 $(this).popover({
-                //   content:"A minimum purchase total of "+ currency_symbol+" "+ conf_value+" is required to validate your order, current purchase total is "+ currency_symbol+" "+ cart_value,
+               
                   title:"WARNING!!",
                   placement:"top",
                   trigger:'focus',
@@ -31,7 +47,7 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
                 $(this).popover('show');
 
             }
-            setTimeout(function() {$link.popover("hide");},3000);
+            setTimeout(function() {$link.popover("dispose");},3000);
         });
 
        var totalPriceElem = $('#sub_total span');
@@ -69,7 +85,7 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
           return parts.join(dec_point);
         }
 
-       var code = $('html').attr('lang');
+       
        defaultPrice.on('DOMSubtreeModified',function(){
           try {
             ajax.jsonRpc('/website/wk_lang','call',{
@@ -98,23 +114,4 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
           }
         });
     });
-
-    $('.oe_website_sale').each(function () {
-        var oe_website_sale = this;
-
-      /*  $(oe_website_sale).on('click', 'span.btn_delete', function (ev)
-        {
-        	ev.preventDefault();
-            var $link = $(ev.currentTarget);
-            var $input = $link.parent().parent().parent().find(".js_quantity");
-            var $val = $link.parent().parent().parent().find(".js_quantity").val();
-            var min = parseFloat($input.data("min") || 0);
-            var max = parseFloat($input.data("max") || Infinity);
-            var quantity = 0
-            $input.val(quantity > min ? (quantity < max ? quantity : max) : min);
-            $('input[name="'+$input.attr("name")+'"]').val(quantity > min ? (quantity < max ? quantity : max) : min);
-            $input.change();
-            return false;
-    	});*/
-	});
 });

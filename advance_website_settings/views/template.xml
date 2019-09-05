@@ -37,9 +37,9 @@
             <t t-if="(compute_currency(line.product_id.lst_price) - line.price_reduce ) &gt; 0.01  and website.get_current_pricelist().discount_policy=='without_discount'">
 
            </t>
-            <span t-esc="sub_total" style="white-space: nowrap;" t-esc-options='{
+            <span t-esc="float(sub_total)" style="white-space: nowrap;" t-options='{
                  "widget": "monetary",
-                 "display_currency": "website.currency_id"
+                 "display_currency": website.get_current_pricelist().currency_id
              }' class="subtotal_show"/>
         </td>
       </xpath>
@@ -53,10 +53,10 @@
       <xpath expr="//table[@id='cart_products']//tbody//tr//td[@class='text-center td-price']" position="after">
         <td class="text-center" name="price"  t-if="website_sale_order.get_show_subtotal() == True">
           <t t-set="sub_total" t-value="line.get_subtotal_cart(line.id)" />
-            <span t-esc="sub_total" style="white-space: nowrap;" t-esc-options='{
+            <span t-esc="sub_total" style="white-space: nowrap;" t-options='{
                  "widget": "monetary",
-                 "from_currency": "website_sale_order.pricelist_id.currency_id",
-                 "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                 
+                 "display_currency": website.pricelist_id.currency_id
              }' class="subtotal_show"/>
           </td>
       </xpath>
@@ -65,7 +65,10 @@
 
     <template id="checkout_button_inherited_cart" inherit_id="website_sale.cart" name="Checkout Repalced">
         <xpath expr="//div/div[@class='col-12 col-xl-8 oe_cart']//a[@href='/shop/checkout?express=1']" position="inside">
-          <p class="wk_cart_values" t-att-conf_value="website_sale_order.sudo().get_minimun_cart_value()" t-att-currency_symbol="website_sale_order.pricelist_id.currency_id.symbol" style="margin:0px;"></p>
+          <p class="oe_currency_value wk_cart_values" t-att-conf_value="website_sale_order.sudo().get_minimun_cart_value()" t-att-currency_symbol="website_sale_order.pricelist_id.currency_id.symbol" style="margin:0px;"><t t-esc='website_sale_order.sudo().get_minimun_cart_value()'  t-options='{
+                 "widget": "monetary",
+                 "display_currency": website.pricelist_id.currency_id
+             }'/></p>
         </xpath>
     </template>
 

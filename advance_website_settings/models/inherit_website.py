@@ -15,7 +15,7 @@ class website(models.Model):
 	_inherit = 'website'
 
 	redirect_to_cart =  fields.Selection([('same','Same Page'),('cart','Cart Summary')], string='Redirect page after adding to cart',default='same')
-	sub_total = fields.Boolean(string = 'Show Subtotal of Order Lines')
+	sub_total = fields.Boolean(string = 'Show Subtotal')
 	minimum_order_value = fields.Float(string = 'Minimum Cart Value To Validate Order')
 	c_id = fields.Many2one('res.currency', 'Currency',default=lambda self: self.env.user.company_id.currency_id.id,required=True)
 
@@ -28,4 +28,5 @@ class website(models.Model):
 			return 0
 
 	def show_subTotal(self):
-		return True if self.env['ir.default'].sudo().get('advance.website.settings', 'sub_total') == None else self.env['ir.default'].sudo().get('advance.website.settings', 'sub_total')
+		ir_default = self.env['website'].sudo().get_current_website().sub_total
+		return True if ir_default == None else ir_default
