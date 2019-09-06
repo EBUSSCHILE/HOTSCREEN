@@ -27,15 +27,14 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
       }
 
         $('.oe_website_sale').on('click', 'a[href$="/shop/checkout?express=1"]', function (ev)
-        {   console.log('enter');
-         console.log(constraints);
-          var conf_value = $('.oe_website_sale').find('.wk_cart_values').text();
+        {   
+          var conf_value = $('.oe_website_sale').find('.wk_cart_values span.oe_currency_value').text();
           var cart_value = $('#order_total span.oe_currency_value').text();
           var cart=parseFloat(cart_value.replace(constraints.thousands_sep,'').replace(constraints.decimal_point,'.'))
           var check=parseFloat(conf_value.replace(constraints.thousands_sep,'').replace(constraints.decimal_point,'.'))
           var currency_symbol = $('.oe_website_sale').find('.wk_cart_values').attr('currency_symbol');
-            var $link = $(this);
-         console.log([cart,check]);
+          var $link = $(this);
+        
             if (cart<check)
             {
                 ev.preventDefault();
