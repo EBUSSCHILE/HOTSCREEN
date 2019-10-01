@@ -2,13 +2,14 @@
 odoo.define('advance_website_settings.advance_website_settings', function (require) {
 "use strict";
 
-    var utils = require('web.utils');
     var core = require('web.core');
-    var base = require('web_editor.base');
     var ajax = require('web.ajax');
     var _t = core._t;
 
     $(document).ready(function(){
+      function escapeRegExp(text) {
+        return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+      }
       var code = $('html').attr('lang');
       var constraints;
       $('.oe_website_sale').find('.wk_cart_values').hide()
@@ -30,11 +31,12 @@ odoo.define('advance_website_settings.advance_website_settings', function (requi
         {   
           var conf_value = $('.oe_website_sale').find('.wk_cart_values span.oe_currency_value').text();
           var cart_value = $('#order_total span.oe_currency_value').text();
-          var cart=parseFloat(cart_value.replace(constraints.thousands_sep,'').replace(constraints.decimal_point,'.'))
-          var check=parseFloat(conf_value.replace(constraints.thousands_sep,'').replace(constraints.decimal_point,'.'))
+          var thousand_sep = new RegExp(escapeRegExp(constraints.thousands_sep),"g")
+          var decimal_sep = new RegExp(escapeRegExp(constraints.decimal_point),"g")
+          var cart=parseFloat(cart_value.replace(thousand_sep,'').replace(decimal_sep,'.'))
+          var check=parseFloat(conf_value.replace(thousand_sep,'').replace(decimal_sep,'.'))
           var currency_symbol = $('.oe_website_sale').find('.wk_cart_values').attr('currency_symbol');
           var $link = $(this);
-        
             if (cart<check)
             {
                 ev.preventDefault();
