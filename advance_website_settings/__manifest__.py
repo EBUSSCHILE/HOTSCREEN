@@ -27,6 +27,5 @@
   "installable"          :  True,
   "auto_install"         :  False,
   "price"                :  29,
-  "currency"             :  "EUR",
-  "pre_init_hook"        :  "pre_init_check",
+  "currency"             :  "EUR"
 }
