@@ -1,0 +1,4 @@
+[submodule "APERADOS/APERADOS"]
+	path = APERADOS/APERADOS
+	url = git@github.com:APERADOS/APERADOS.git
+	branch = Test
