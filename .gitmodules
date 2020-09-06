@@ -2,3 +2,8 @@
 	path = APERADOS/APERADOS
 	url = git@github.com:APERADOS/APERADOS.git
 	branch = Test
+
+[submodule "odoosistema/APERADOS"]
+	path = odoosistema/APERADOS
+	url = git@github.com:odoosistema/APERADOS.git
+	branch = Test
