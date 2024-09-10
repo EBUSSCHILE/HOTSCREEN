@@ -1,0 +1,50 @@
+name: hotscreen
+description: "A new Flutter project hotscreen."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.4.0
+  firebase_auth: ^5.2.0
+  google_sign_in: ^6.2.1
+  logging: ^1.2.0
+  cupertino_icons: ^1.0.6
+  http: ^1.2.2
+  universal_io: ^2.2.2
+  shared_preferences: ^2.2.2  # Usa la versión más reciente
+ 
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/hotscreen_isotipo_64x64.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/hotscreen_logo_992x296.png
+    - assets/images/hotscreen_logo_300x89.png
+    - assets/images/hotscreen_isotipo_292x292.png
+    - assets/images/hotscreen_isotipo_64x64.png
+    - assets/images/google_logo.png
+    - assets/images/facebook_logo.png
+    - assets/images/linkedin_logo.png
+    - assets/images/x_logo.png
+    - assets/images/background.png
+    - assets/images/google_icon_02.png
+  fonts:
+    - family: Noto Sans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+        - asset: assets/fonts/NotoSans-Bold.ttf
+          weight: 700

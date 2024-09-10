@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "822146673006",
+    "project_id": "hotscreen-4dd4f",
+    "storage_bucket": "hotscreen-4dd4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822146673006:android:8e85164b0aa1195cb9f97f",
+        "android_client_info": {
+          "package_name": "com.remotjob.hotscreen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822146673006-7pepc2cog74ivcp3ote0tdgb8eri1lts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.remotjob.hotscreen",
+            "certificate_hash": "bed0173c89c49215f2d57a5016764922c9fcd92c"
+          }
+        },
+        {
+          "client_id": "822146673006-j4be8onev78mjg6kek2toh0dsektmn7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8TJTGbFNcdoN-cyPzC3HDjavnPCidX50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822146673006-j4be8onev78mjg6kek2toh0dsektmn7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
