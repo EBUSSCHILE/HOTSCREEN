@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../config/app_theme.dart';
+import 'package:provider/provider.dart';
+import '../providers/theme_provider.dart';
 
 class BackgroundWrapper extends StatelessWidget {
   final Widget child;
@@ -8,8 +9,13 @@ class BackgroundWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
-      decoration: AppTheme.pageBackground,
+      decoration: BoxDecoration(
+        // Usa el tema actual para determinar el fondo
+        color: themeProvider.currentTheme.scaffoldBackgroundColor,
+        // Añade más decoración si es necesario
+      ),
       child: child,
     );
   }

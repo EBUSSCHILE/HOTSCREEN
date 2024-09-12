@@ -1,51 +1,34 @@
 import 'package:flutter/material.dart';
-import '../config/app_theme.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String labelText;
-  final IconData prefixIcon;
+  final String hintText;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
   final bool obscureText;
-  final TextEditingController controller;
-  final String? Function(String?)? validator;
-  final Widget? suffixIcon;
 
   const CustomTextField({
     super.key,
-    required this.labelText,
-    required this.prefixIcon,
-    this.obscureText = false,
-    required this.controller,
-    this.validator,
+    required this.hintText,
+    this.prefixIcon,
     this.suffixIcon,
+    this.obscureText = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
+    return TextField(
       obscureText: obscureText,
-      style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: const TextStyle(color: AppTheme.primaryColor),
+        hintText: hintText,
         filled: true,
         fillColor: Colors.white,
-        prefixIcon: Icon(prefixIcon, color: AppTheme.primaryColor),
-        suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide.none,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: AppTheme.primaryColor.withOpacity(0.5)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(color: AppTheme.primaryColor),
-        ),
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+        suffixIcon: suffixIcon != null ? Icon(suffixIcon) : null,
       ),
-      validator: validator,
     );
   }
 }

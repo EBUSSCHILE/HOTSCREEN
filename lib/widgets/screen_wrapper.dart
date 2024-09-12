@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
-import 'background_wrapper.dart';
-import 'custom_app_bar.dart';
 
 class ScreenWrapper extends StatelessWidget {
+  final Widget child;
   final String title;
-  final Widget body;
 
-  const ScreenWrapper({super.key, required this.title, required this.body});
+  const ScreenWrapper({
+    super.key,
+    required this.child,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BackgroundWrapper(
-      child: Scaffold(
-        appBar: CustomAppBar(title: title),
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: body,
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF1A237E), Color(0xFF000051)], // Azul oscuro
         ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text(title),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: child,
       ),
     );
   }

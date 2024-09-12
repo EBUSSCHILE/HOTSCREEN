@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'config/app_theme.dart';
-import 'screens/login_screen.dart';
+import 'package:provider/provider.dart';
+import 'providers/theme_provider.dart';
+import 'screens/login_home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -13,22 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'HotScreen',
-      theme: AppTheme.getTheme(),
-      home: const BackgroundWrapper(child: LoginScreen()),
-    );
-  }
-}
-
-class BackgroundWrapper extends StatelessWidget {
-  final Widget child;
-
-  const BackgroundWrapper({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: AppTheme.pageBackground,
-      child: child,
+      theme: Provider.of<ThemeProvider>(context).currentTheme,
+      home: const LoginHomeScreen(),
     );
   }
 }

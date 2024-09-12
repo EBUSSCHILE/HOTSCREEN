@@ -7,21 +7,23 @@ class AppConfig extends StatelessWidget {
 
   const AppConfig({
     super.key, // Usamos super parameter
-    this.backgroundColor = AppTheme.backgroundColor,
+    this.backgroundColor = Colors.transparent, // Cambiado de AppTheme.backgroundColor
   });
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       title: 'Configuración',
-      backgroundColor: backgroundColor,
-      body: const Center(
-        child: Text('Contenido de Configuración'),
+      body: Container(
+        color: backgroundColor,
+        child: const Center(
+          child: Text('Contenido de Configuración'),
+        ),
       ),
     );
   }
 
   static ThemeData getTheme() {
-    return AppTheme.getTheme(); // Ahora esto debería funcionar correctamente
+    return AppTheme.lightTheme;
   }
 }

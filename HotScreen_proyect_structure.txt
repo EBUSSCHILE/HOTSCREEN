@@ -1,0 +1,84 @@
+# Proyecto: HotScreen
+# Pantalla principal: LoginScreen
+# Otras notas importantes:
+# - El nombre de la clase principal es LoginScreen
+# - [Agrega aquí cualquier otra información crucial sobre la estructura del proyecto]
+@/
+@lib/
+@pubspec.yaml
+@lib/config/
+@lib/providers/
+@lib/models/
+@lib/services/
+@lib/utils/
+@lib/widgets/
+@lib/main.dart
+@lib/screens/
+@lib/test/
+@lib/config/app_config.dart
+@lib/config/app_theme.dart
+@lib/config/firebase_options.dart
+@lib/providers/theme_provider.dart
+@lib/screens/help_screen.dart
+@lib/screens/categories_menu_screen.dart
+@lib/screens/category_01.dart
+@lib/screens/category_02.dart
+@lib/screens/category_03.dart
+@lib/screens/chat_page.dart
+@lib/screens/login_home_screen.dart
+@lib/screens/user_profile_screen.dart
+@lib/screens/settings_screen.dart
+@lib/screens/background_wrapper.dart
+@lib/services/claude_service.dart
+@lib/widgets/app_background.dart
+@lib/widgets/background_wrapper.dart
+@lib/widgets/custom_app_bar_with_user.dart
+@lib/widgets/base_screen.dart
+@lib/widgets/custom_app_bar.dart
+@lib/widgets/custom_button.dart
+@lib/widgets/custom_text_field.dart
+@lib/widgets/screen_wrapper.dart
+@lib/widgets/user_icon_button.dart
+@test/widget_test.dart
+
+
+[HotScreen App]
+|
++-- [main.dart]
+    |
+    +-- [LoginScreen] (login_home_screen.dart)
+        |
+        +-- [CategoriesMenu] (categories_menu_screen.dart)
+        |   |
+        |   +-- [Category01] (category_01.dart)
+        |   +-- [Category02] (category_02.dart)
+        |   +-- [Category03] (category_03.dart)
+        |
+        +-- [ChatPage] (chat_page.dart)
+        |   |
+        |   +-- [ClaudeService] (claude_service.dart)
+        |
+        +-- [UserProfileScreen] (user_profile_screen.dart)  // Actualizado
+        |
+        +-- [SettingsScreen] (settings_screen.dart)
+        |   |
+        |   +-- [ThemeProvider] (theme_provider.dart)
+        |
+        +-- [HelpScreen] (help_screen.dart)
+
+[Widgets Compartidos]
+|
++-- [AppBackground] (app_background.dart)
++-- [BackgroundWrapper] (background_wrapper.dart)
++-- [BaseScreen] (base_screen.dart)
++-- [CustomAppBar] (custom_app_bar.dart)
++-- [CustomButton] (custom_button.dart)
++-- [CustomTextField] (custom_text_field.dart)
++-- [ScreenWrapper] (screen_wrapper.dart)
++-- [UserIconButton] (user_icon_button.dart)
+
+[Configuración]
+|
++-- [AppConfig] (app_config.dart)
++-- [AppTheme] (app_theme.dart)
++-- [FirebaseOptions] (firebase_options.dart)
