@@ -6,61 +6,52 @@ import '../screens/settings_screen.dart';
 class UserIconButton extends StatelessWidget {
   const UserIconButton({super.key});
 
+  static const Color menuTextColor = Colors.white;
+  static const Color menuIconColor = Colors.white;
+  static const Color menuBackgroundColor = Colors.deepPurple;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 50.0),
-      child: GestureDetector(
-        onTap: () {
-          _showUserMenu(context);
-        },
+      child: PopupMenuButton<String>(
+        color: menuBackgroundColor,
+        onSelected: (value) => _handleMenuSelection(context, value),
+        itemBuilder: (BuildContext context) => const <PopupMenuEntry<String>>[
+          PopupMenuItem<String>(
+            value: 'profile',
+            child: Row(
+              children: [
+                Icon(Icons.person, color: menuIconColor),
+                SizedBox(width: 8),
+                Text('Profile', style: TextStyle(color: menuTextColor)),
+              ],
+            ),
+          ),
+          PopupMenuItem<String>(
+            value: 'settings',
+            child: Row(
+              children: [
+                Icon(Icons.settings, color: menuIconColor),
+                SizedBox(width: 8),
+                Text('Settings', style: TextStyle(color: menuTextColor)),
+              ],
+            ),
+          ),
+          PopupMenuItem<String>(
+            value: 'logout',
+            child: Row(
+              children: [
+                Icon(Icons.exit_to_app, color: menuIconColor),
+                SizedBox(width: 8),
+                Text('Log out', style: TextStyle(color: menuTextColor)),
+              ],
+            ),
+          ),
+        ],
         child: const Icon(Icons.person, color: Colors.white),
       ),
     );
-  }
-
-  void _showUserMenu(BuildContext context) {
-    final RenderBox button = context.findRenderObject() as RenderBox;
-    final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(button.size.bottomLeft(Offset.zero), ancestor: overlay),
-        button.localToGlobal(button.size.bottomRight(Offset.zero), ancestor: overlay),
-      ),
-      Offset.zero & overlay.size,
-    );
-
-    showMenu(
-      context: context,
-      position: position,
-      items: <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'profile',
-          child: ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'settings',
-          child: ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'logout',
-          child: ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Log out'),
-          ),
-        ),
-      ],
-    ).then((String? value) {
-      if (value != null && context.mounted) {
-        _handleMenuSelection(context, value);
-      }
-    });
   }
 
   void _handleMenuSelection(BuildContext context, String value) {
@@ -72,7 +63,6 @@ class UserIconButton extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsScreen()));
         break;
       case 'logout':
-        // Aquí podrías añadir lógica para cerrar sesión antes de navegar
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const LoginHomeScreen()),
           (Route<dynamic> route) => false,

@@ -10,6 +10,7 @@
 @lib/providers/
 @lib/models/
 @lib/services/
+@lib/styles/
 @lib/utils/
 @lib/widgets/
 @lib/main.dart
@@ -30,6 +31,8 @@
 @lib/screens/settings_screen.dart
 @lib/screens/background_wrapper.dart
 @lib/services/claude_service.dart
+@lib/styles/text_field_styles.dart
+@lib/styles/text_styles.dart
 @lib/widgets/app_background.dart
 @lib/widgets/background_wrapper.dart
 @lib/widgets/custom_app_bar_with_user.dart

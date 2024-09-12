@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import '../styles/text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final TextStyle? textStyle;
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.textStyle,
   });
 
   @override
@@ -20,7 +23,10 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
         ),
       ),
-      child: Text(text, style: const TextStyle(fontSize: 18)),
+      child: Text(
+        text,
+        style: textStyle ?? AppTextStyles.medium,
+      ),
     );
   }
 }
