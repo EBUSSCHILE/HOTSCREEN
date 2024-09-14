@@ -18,6 +18,7 @@ dependencies:
   universal_io: ^2.2.2
   shared_preferences: ^2.2.2  # Usa la versión más reciente
   provider: ^6.0.0  # o la versión más reciente
+  flutter_svg: ^2.0.9  # Añade esta línea (usa la versión más reciente)
 
 dev_dependencies:
   flutter_test:
@@ -40,7 +41,7 @@ flutter:
     - assets/images/facebook_logo.png
     - assets/images/linkedin_logo.png
     - assets/images/x_logo.png
-    - assets/images/background_pattern.png
+    - assets/images/background_pattern.svg
     - assets/images/google_icon_02.png
   fonts:
     - family: Noto Sans

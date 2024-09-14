@@ -86,4 +86,16 @@ class AppTextStyles {
     fontSize: 12,
     color: mediumPurple,
   );
+
+  // Asegúrate de que estos estilos estén definidos aquí
+  static const TextStyle categoryTitle = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  static const TextStyle categoryDescription = TextStyle(
+    fontSize: 16,
+    color: Colors.white70,
+  );
 }

@@ -1,32 +1,76 @@
 import 'package:flutter/material.dart';
-import '../styles/text_styles.dart';
+import '../styles/button_styles.dart';
 
 class CustomButton extends StatelessWidget {
-  final String text;
+  final String texto;
   final VoidCallback onPressed;
-  final TextStyle? textStyle;
+  final ButtonType tipo;
+  final ButtonSize tamano;
+  final bool deshabilitado;
 
   const CustomButton({
     super.key,
-    required this.text,
+    required this.texto,
     required this.onPressed,
-    this.textStyle,
+    this.tipo = ButtonType.primary,
+    this.tamano = ButtonSize.medium,
+    this.deshabilitado = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    ButtonStyle estilo;
+    TextStyle estiloTexto;
+
+    switch (tipo) {
+      case ButtonType.secondary:
+        estilo = AppButtonStyles.secondaryButton;
+        break;
+      case ButtonType.primary:
+      default:
+        estilo = AppButtonStyles.primaryButton;
+    }
+
+    if (deshabilitado) {
+      estilo = AppButtonStyles.disabledButton;
+    }
+
+    switch (tamano) {
+      case ButtonSize.gigagiant:
+        estiloTexto = AppButtonStyles.gigagiantButtonText;
+        break;
+      case ButtonSize.tooBig:
+        estiloTexto = AppButtonStyles.tooBigButtonText;
+        break;
+      case ButtonSize.big:
+        estiloTexto = AppButtonStyles.bigButtonText;
+        break;
+      case ButtonSize.medium:
+        estiloTexto = AppButtonStyles.mediumButtonText;
+        break;
+      case ButtonSize.small:
+        estiloTexto = AppButtonStyles.smallButtonText;
+        break;
+      case ButtonSize.micro:
+        estiloTexto = AppButtonStyles.microButtonText;
+        break;
+      case ButtonSize.nano:
+        estiloTexto = AppButtonStyles.nanoButtonText;
+        break;
+      default:
+        estiloTexto = AppButtonStyles.mediumButtonText;
+    }
+
     return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-      ),
+      style: estilo,
+      onPressed: deshabilitado ? null : onPressed,
       child: Text(
-        text,
-        style: textStyle ?? AppTextStyles.medium,
+        texto,
+        style: estiloTexto,
       ),
     );
   }
 }
+
+enum ButtonType { primary, secondary }
+enum ButtonSize { gigagiant, tooBig, big, medium, small, micro, nano }

@@ -31,18 +31,21 @@ class CategoriesMenuScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomButton(
-                text: 'Category 01',
+                texto: 'Category 01', // Reemplazado 'text' por 'texto'
                 onPressed: () => _navigateToCategory(context, const Category01Screen()),
+                tamano: ButtonSize.medium, // Opcional
               ),
               const SizedBox(height: 20),
               CustomButton(
-                text: 'Category 02',
+                texto: 'Category 02', // Reemplazado 'text' por 'texto'
                 onPressed: () => _navigateToCategory(context, const Category02Screen()),
+                tamano: ButtonSize.medium,
               ),
               const SizedBox(height: 20),
               CustomButton(
-                text: 'Category 03',
+                texto: 'Category 03', // Reemplazado 'text' por 'texto'
                 onPressed: () => _navigateToCategory(context, const Category03Screen()),
+                tamano: ButtonSize.medium,
               ),
             ],
           ),
