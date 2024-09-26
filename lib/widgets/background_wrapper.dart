@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
+import 'package:hotscreen/providers/theme_provider.dart';
+import 'package:hotscreen/config/app_variable_background.dart';
 
 class BackgroundWrapper extends StatelessWidget {
   final Widget child;
@@ -10,13 +11,16 @@ class BackgroundWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return Container(
-      decoration: BoxDecoration(
-        // Usa el tema actual para determinar el fondo
-        color: themeProvider.currentTheme.scaffoldBackgroundColor,
-        // Añade más decoración si es necesario
-      ),
-      child: child,
-    );
+    
+    if (themeProvider.useVariableBackground) {
+      return AppVariableBackground(child: child);
+    } else {
+      return Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        child: child,
+      );
+    }
   }
 }

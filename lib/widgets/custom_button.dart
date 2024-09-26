@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../styles/button_styles.dart';
+import '../styles/button_styles.dart'; // Asegúrate de que esta importación esté presente
 
 class CustomButton extends StatelessWidget {
   final String texto;
@@ -7,70 +7,54 @@ class CustomButton extends StatelessWidget {
   final ButtonType tipo;
   final ButtonSize tamano;
   final bool deshabilitado;
+  final double? widthFactor;
 
   const CustomButton({
-    super.key,
+    super.key, // Uso de parámetros super
     required this.texto,
     required this.onPressed,
     this.tipo = ButtonType.primary,
     this.tamano = ButtonSize.medium,
     this.deshabilitado = false,
+    this.widthFactor,
   });
 
   @override
   Widget build(BuildContext context) {
-    ButtonStyle estilo;
-    TextStyle estiloTexto;
+    var mediaQuery = MediaQuery.of(context);
+    double calculatedWidthFactor;
 
-    switch (tipo) {
-      case ButtonType.secondary:
-        estilo = AppButtonStyles.secondaryButton;
-        break;
-      case ButtonType.primary:
-      default:
-        estilo = AppButtonStyles.primaryButton;
+    if (mediaQuery.size.width > 1200) { // Pantallas extremadamente grandes
+      calculatedWidthFactor = 0.3;
+    } else if (mediaQuery.size.width > 900) { // Pantallas grandes (tablets, laptops)
+      calculatedWidthFactor = 0.4;
+    } else if (mediaQuery.size.width > 600) { // Pantallas medianas
+      calculatedWidthFactor = 0.5;
+    } else if (mediaQuery.orientation == Orientation.landscape) {
+      calculatedWidthFactor = 0.6;
+    } else {
+      calculatedWidthFactor = widthFactor ?? 0.8; // Valor por defecto para pantallas pequeñas
     }
 
-    if (deshabilitado) {
-      estilo = AppButtonStyles.disabledButton;
-    }
+    double buttonWidth = mediaQuery.size.width * calculatedWidthFactor;
 
-    switch (tamano) {
-      case ButtonSize.gigagiant:
-        estiloTexto = AppButtonStyles.gigagiantButtonText;
-        break;
-      case ButtonSize.tooBig:
-        estiloTexto = AppButtonStyles.tooBigButtonText;
-        break;
-      case ButtonSize.big:
-        estiloTexto = AppButtonStyles.bigButtonText;
-        break;
-      case ButtonSize.medium:
-        estiloTexto = AppButtonStyles.mediumButtonText;
-        break;
-      case ButtonSize.small:
-        estiloTexto = AppButtonStyles.smallButtonText;
-        break;
-      case ButtonSize.micro:
-        estiloTexto = AppButtonStyles.microButtonText;
-        break;
-      case ButtonSize.nano:
-        estiloTexto = AppButtonStyles.nanoButtonText;
-        break;
-      default:
-        estiloTexto = AppButtonStyles.mediumButtonText;
-    }
+    // Cálculo dinámico de letterSpacing basado en el ancho del botón
+    double letterSpacing = buttonWidth > 300 ? 2.0 : 1.0;
 
-    return ElevatedButton(
-      style: estilo,
-      onPressed: deshabilitado ? null : onPressed,
-      child: Text(
-        texto,
-        style: estiloTexto,
+    return SizedBox(
+      width: buttonWidth,
+      child: ElevatedButton(
+        onPressed: deshabilitado ? null : onPressed,
+        style: AppButtonStyles.getResponsiveButtonStyle(context, size: tamano),
+        child: Text(
+          texto,
+          style: AppButtonStyles.estiloTexto.copyWith(
+            letterSpacing: letterSpacing,
+          ),
+        ),
       ),
     );
   }
 }
 
 enum ButtonType { primary, secondary }
-enum ButtonSize { gigagiant, tooBig, big, medium, small, micro, nano }

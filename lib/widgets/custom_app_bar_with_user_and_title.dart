@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'user_icon_button.dart';
+import 'user_icon_button.dart'; // Asegúrate de que esta ruta es correcta
 
 class CustomAppBarWithUserAndTitle extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -9,25 +9,27 @@ class CustomAppBarWithUserAndTitle extends StatelessWidget implements PreferredS
   const CustomAppBarWithUserAndTitle({
     super.key,
     required this.title,
-    this.showBackButton = true,
+    this.showBackButton = false,
     this.onBackPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title, style: const TextStyle(color: Colors.white)),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
       leading: showBackButton
           ? IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              icon: const Icon(Icons.arrow_back),
               onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
             )
           : null,
+      title: Text(title),
       actions: const [
-        UserIconButton(),
+        Padding(
+          padding: EdgeInsets.only(right: 50.0), // 50 píxeles del margen derecho
+          child: UserIconButton(), // Reintroducir el UserIconButton
+        ),
       ],
+      backgroundColor: Theme.of(context).primaryColor, // Mantener el color del tema
     );
   }
 

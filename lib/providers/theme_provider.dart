@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _currentTheme = ThemeData.light();
+  final Color _primaryColor = Colors.purple;
+  final Color _scaffoldBackgroundColor = const Color(0xFF000080); // Azul oscuro
+  bool _useVariableBackground = false;
 
-  ThemeData get currentTheme => _currentTheme;
+  ThemeData get theme => ThemeData(
+    primaryColor: _primaryColor,
+    scaffoldBackgroundColor: _scaffoldBackgroundColor,
+    appBarTheme: AppBarTheme(
+      backgroundColor: _primaryColor,
+      foregroundColor: Colors.white,
+    ),
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(color: Colors.white),
+      bodyMedium: TextStyle(color: Colors.white),
+    ),
+  );
 
-  void toggleTheme() {
-    _currentTheme = _currentTheme == ThemeData.light()
-        ? ThemeData.dark()
-        : ThemeData.light();
+  bool get useVariableBackground => _useVariableBackground;
+
+  void toggleBackground() {
+    _useVariableBackground = !_useVariableBackground;
     notifyListeners();
   }
 }

@@ -1,74 +1,107 @@
 import 'package:flutter/material.dart';
-import '../screens/login_home_screen.dart';
 import '../screens/user_profile_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/login_home_screen.dart'; // Corregimos esta importación
 
 class UserIconButton extends StatelessWidget {
   const UserIconButton({super.key});
 
-  static const Color menuTextColor = Colors.white;
-  static const Color menuIconColor = Colors.white;
-  static const Color menuBackgroundColor = Colors.deepPurple;
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 50.0),
-      child: PopupMenuButton<String>(
-        color: menuBackgroundColor,
-        onSelected: (value) => _handleMenuSelection(context, value),
-        itemBuilder: (BuildContext context) => const <PopupMenuEntry<String>>[
-          PopupMenuItem<String>(
-            value: 'profile',
-            child: Row(
-              children: [
-                Icon(Icons.person, color: menuIconColor),
-                SizedBox(width: 8),
-                Text('Profile', style: TextStyle(color: menuTextColor)),
-              ],
-            ),
-          ),
-          PopupMenuItem<String>(
-            value: 'settings',
-            child: Row(
-              children: [
-                Icon(Icons.settings, color: menuIconColor),
-                SizedBox(width: 8),
-                Text('Settings', style: TextStyle(color: menuTextColor)),
-              ],
-            ),
-          ),
-          PopupMenuItem<String>(
-            value: 'logout',
-            child: Row(
-              children: [
-                Icon(Icons.exit_to_app, color: menuIconColor),
-                SizedBox(width: 8),
-                Text('Log out', style: TextStyle(color: menuTextColor)),
-              ],
-            ),
-          ),
-        ],
-        child: const Icon(Icons.person, color: Colors.white),
-      ),
+    return PopupMenuButton<String>(
+      icon: const Icon(Icons.person, color: Colors.white),
+      onSelected: (String result) {
+        switch (result) {
+          case 'profile':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UserProfileScreen()),
+            );
+            break;
+          case 'settings':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsScreen()),
+            );
+            break;
+          case 'logout':
+            _handleLogout(context);
+            break;
+        }
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: 'profile',
+          child: Text('Perfil de Usuario', style: TextStyle(color: Colors.white)),
+        ),
+        const PopupMenuItem<String>(
+          value: 'settings',
+          child: Text('Configuración', style: TextStyle(color: Colors.white)),
+        ),
+        const PopupMenuItem<String>(
+          value: 'logout',
+          child: Text('Cerrar Sesión', style: TextStyle(color: Colors.white)),
+        ),
+      ],
+      color: const Color(0xFF4B0082), // Violeta oscuro
+      elevation: 8,
     );
   }
 
-  void _handleMenuSelection(BuildContext context, String value) {
-    switch (value) {
-      case 'profile':
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UserProfileScreen()));
-        break;
-      case 'settings':
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsScreen()));
-        break;
-      case 'logout':
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const LoginHomeScreen()),
-          (Route<dynamic> route) => false,
+  void _handleLogout(BuildContext context) async {
+    bool? confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text(
+            'Cerrar Sesión',
+            style: TextStyle(color: Colors.black),
+          ),
+          content: const Text(
+            '¿Estás seguro de que quieres cerrar sesión?',
+            style: TextStyle(color: Colors.purple),
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancelar',
+                style: TextStyle(color: Colors.purple),
+              ),
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+            ),
+            TextButton(
+              child: const Text(
+                'Sí, cerrar sesión',
+                style: TextStyle(color: Colors.purple),
+              ),
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+            ),
+          ],
         );
-        break;
+      },
+    );
+
+    if (confirmed == true) {
+      // Verificamos si el widget aún está montado antes de usar el contexto
+      if (context.mounted) {
+        _performLogout(context);
+      }
     }
+  }
+
+  void _performLogout(BuildContext context) {
+    // Aquí iría la lógica de cierre de sesión si la tuvieras
+    // Por ejemplo, limpiar tokens de autenticación, etc.
+
+    // Navegar a la pantalla de login
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const LoginHomeScreen()),
+      (Route<dynamic> route) => false,
+    );
   }
 }
 

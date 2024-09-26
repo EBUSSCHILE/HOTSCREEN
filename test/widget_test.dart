@@ -6,7 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 // ignore: unused_import
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hotscreen/main.dart'; // Asegúrate de que este nombre coincida con tu paquete
 

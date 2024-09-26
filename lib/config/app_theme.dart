@@ -4,50 +4,33 @@ import '../styles/text_styles.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class AppTheme {
-  static const darkPurple = Color(0xFF2A0E61);
-  static const lightPurple = Color(0xFFB39DDB);
+  // Definimos el color de fondo azul oscuro
+  static const Color backgroundColor = Color(0xFF000080); // Este es el azul oscuro de la imagen
 
-  static final ThemeData lightTheme = ThemeData(
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: lightPurple,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-    ),
-    textTheme: const TextTheme(
-      displayLarge: AppTextStyles.tooBig,
-      displayMedium: AppTextStyles.big,
-      bodyLarge: AppTextStyles.medium,
-      bodyMedium: AppTextStyles.small,
-      bodySmall: AppTextStyles.micro,
-    ),
-    // ... otros ajustes del tema claro ...
-  );
+  static ThemeData get lightTheme {
+    return ThemeData(
+      scaffoldBackgroundColor: backgroundColor,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      textTheme: const TextTheme(
+        displayLarge: AppTextStyles.tooBig,
+        displayMedium: AppTextStyles.big,
+        bodyLarge: AppTextStyles.medium,
+        bodyMedium: AppTextStyles.small,
+        bodySmall: AppTextStyles.micro,
+      ),
+      // Otros ajustes del tema...
+    );
+  }
 
-  static final ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    scaffoldBackgroundColor: darkPurple,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-    ),
-    // ... otros ajustes del tema oscuro ...
-  );
-
-  static BoxDecoration backgroundDecoration(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    return BoxDecoration(
-      color: isDarkMode ? darkPurple : null,
-      image: isDarkMode
-          ? null
-          : const DecorationImage(
-              image: AssetImage('assets/images/background.png'),
-              fit: BoxFit.cover,
-            ),
+  static ThemeData get darkTheme {
+    return ThemeData(
+      scaffoldBackgroundColor: backgroundColor, // Usamos el mismo color para el tema oscuro
+      // Otros ajustes del tema oscuro...
     );
   }
 }

@@ -4,6 +4,7 @@ import '../widgets/custom_text_field.dart';
 import '../widgets/custom_button.dart';
 import 'categories_menu_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hotscreen/styles/button_styles.dart';
 
 class LoginHomeScreen extends StatelessWidget {
   const LoginHomeScreen({super.key});
@@ -11,10 +12,12 @@ class LoginHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Eliminar completamente el AppBar
+      backgroundColor: Colors.transparent,
       body: Stack(
         fit: StackFit.expand,  // Asegura que el Stack ocupe todo el espacio disponible
         children: [
-          // Fondo
+          // Fondo con imagen SVG
           SvgPicture.asset(
             'assets/images/background_pattern.svg',
             fit: BoxFit.cover,  // Ajusta la imagen para cubrir todo el espacio

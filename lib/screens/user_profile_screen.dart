@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/user_icon_button.dart'; // Asegúrate de que este import exista
+import '../widgets/custom_app_bar_with_user_and_title.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -8,59 +7,73 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'User Profile',
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: const Color(0xFF000080), // Azul oscuro personalizado
-        actions: const [
-          UserIconButton(), // Mantenemos el User Icon en el AppBar
-        ],
+      appBar: const CustomAppBarWithUserAndTitle(
+        title: 'Perfil de Usuario',
+        showBackButton: true,
       ),
-      body: Container(
-        color: const Color(0xFF000080), // Mismo azul oscuro para el fondo del body
-        child: _buildBody(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Center(
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage('assets/images/default_avatar.png'),
+                  // Reemplaza con la imagen de perfil del usuario si está disponible
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Center(
+                child: Text(
+                  'Nombre de Usuario',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              _buildInfoItem(Icons.email, 'Correo electrónico', 'usuario@ejemplo.com'),
+              _buildInfoItem(Icons.phone, 'Teléfono', '+1234567890'),
+              _buildInfoItem(Icons.location_on, 'Ubicación', 'Ciudad, País'),
+              const SizedBox(height: 30),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Lógica para editar perfil
+                  },
+                  child: const Text('Editar Perfil'),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildBody() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildInfoItem(IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
         children: [
-          const CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.white,
-            child: Icon(Icons.person, size: 50, color: Colors.blue),
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            'Username',
-            style: TextStyle(fontSize: 24, color: Colors.white),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'user@example.com',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
-          const SizedBox(height: 30),
-          CustomButton(
-            texto: 'Editar Perfil',
-            onPressed: () {
-              // Lógica para editar perfil
-            },
-            tamano: ButtonSize.medium,
-          ),
-          const SizedBox(height: 15),
-          CustomButton(
-            texto: 'Cambiar Contraseña',
-            onPressed: () {
-              // Lógica para cambiar contraseña
-            },
-            tamano: ButtonSize.medium,
+          Icon(icon, color: Colors.white70),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(color: Colors.white70, fontSize: 14),
+              ),
+              Text(
+                value,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ],
           ),
         ],
       ),

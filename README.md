@@ -3,7 +3,7 @@
 =======
 # remotdev
 
-A new Flutter project.
+A new Flutter project in Cursor IDE.
 
 ## Getting Started
 
@@ -22,77 +22,89 @@ samples, guidance on mobile development, and a full API reference.
 # Pantalla principal: LoginScreen
 # Otras notas importantes:
 # - El nombre de la clase principal es LoginScreen
-# - [Agrega aquí cualquier otra información crucial sobre la estructura del proyecto]
+# - El ambiente de edición es CURSOR IDE con inteligencia artificial
+# - El lenguaje de programación es DART
+# - El gestor de paquetes es pub.dev
+# - El gestor de dependencias es pub.dev
+
 @/
 @lib/
-@pubspec.yaml
 @lib/config/
-@lib/providers/
 @lib/models/
+@lib/providers/
+@lib/screens/
 @lib/services/
 @lib/styles/
+@lib/test/
 @lib/utils/
 @lib/widgets/
 @lib/main.dart
-@lib/screens/
-@lib/test/
+@pubspec.yaml
+
+@app_background.dart
+@app_config.dart
+@app_theme.dart
+@app_variable_background.dart
+@background_wrapper.dart
+@base_screen.dart
+@button_styles.dart
+@categories_menu_screen.dart
+@category_screen_01.dart
+@category_screen_02.dart
+@category_screen_03.dart
+@chat_page.dart
+@claude_service.dart
+@custom_app_bar.dart
+@custom_app_bar_with_user.dart
+@custom_button.dart
+@custom_text_field.dart
+@firebase_options.dart
+@help_screen.dart
+@login_home_screen.dart
+@screen_wrapper.dart
+@settings_screen.dart
+@standard_app_bar.dart
+@text_field_styles.dart
+@text_styles.dart
+@theme_provider.dart
+@user_icon_button.dart
+@user_profile_screen.dart
+@widget_test.dart
+
+
 @lib/config/app_config.dart
 @lib/config/app_theme.dart
 @lib/config/firebase_options.dart
+@lib/config/app_variable_background.dart
 @lib/providers/theme_provider.dart
-@lib/screens/help_screen.dart
 @lib/screens/categories_menu_screen.dart
-@lib/screens/category_01.dart
+@lib/screens/category_screen_01.dart
 @lib/screens/category_02.dart
 @lib/screens/category_03.dart
 @lib/screens/chat_page.dart
+@lib/screens/help_screen.dart
 @lib/screens/login_home_screen.dart
-@lib/screens/user_profile_screen.dart
 @lib/screens/settings_screen.dart
-@lib/screens/background_wrapper.dart
+@lib/screens/user_profile_screen.dart
 @lib/services/claude_service.dart
+@lib/styles/button_styles.dart
 @lib/styles/text_field_styles.dart
 @lib/styles/text_styles.dart
 @lib/widgets/app_background.dart
 @lib/widgets/background_wrapper.dart
-@lib/widgets/custom_app_bar_with_user.dart
 @lib/widgets/base_screen.dart
 @lib/widgets/custom_app_bar.dart
-@lib/styles/button_styles.dart
+@lib/widgets/custom_app_bar_with_user.dart
 @lib/widgets/custom_button.dart
 @lib/widgets/custom_text_field.dart
+@lib/widgets/background_wrapper.dart
 @lib/widgets/screen_wrapper.dart
+@lib/widgets/standard_app_bar.dart
 @lib/widgets/user_icon_button.dart
 @test/widget_test.dart
 
-@app_config.dart
-@app_theme.dart
-@firebase_options.dart
-@theme_provider.dart
-@help_screen.dart
-@categories_menu_screen.dart
-@category_01.dart
-@category_02.dart
-@category_03.dart
-@chat_page.dart
-@login_home_screen.dart
-@user_profile_screen.dart
-@settings_screen.dart
-@background_wrapper.dart
-@claude_service.dart
-@text_field_styles.dart
-@text_styles.dart
-@app_background.dart
-@background_wrapper.dart
-@custom_app_bar_with_user.dart
-@base_screen.dart
-@custom_app_bar.dart
-@button_styles.dart
-@custom_button.dart
-@custom_text_field.dart
-@screen_wrapper.dart
-@user_icon_button.dart
-@widget_test.dart
+
+
 
 [HotScreen App]
 |
