@@ -36,11 +36,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/hotscreen_logo_300x89.png
-    - assets/images/hotscreen_isotipo_292x292.png
-    - assets/images/hotscreen_isotipo_64x64.png
-    - assets/images/google_logo.png
-    - assets/images/facebook_logo.png
-    - assets/images/linkedin_logo.png
+    - assets/images/hotscreen_sinfondo.png
     - assets/images/x_logo.png
     - assets/images/background_pattern.svg
     - assets/images/google_icon_02.png

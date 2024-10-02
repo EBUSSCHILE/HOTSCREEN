@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
-import 'text_styles.dart';
+import '../constants/app_constants.dart';
 
 class TextFieldStyles {
-  static TextStyle get inputText => AppTextStyles.inputText;
-  static TextStyle get hintText => AppTextStyles.hintText;
-
   static InputDecoration getDecoration({
-    String? hintText,
-    IconData? prefixIcon,
-    IconData? suffixIcon,
+    required String hintText,
+    required IconData icon,
   }) {
     return InputDecoration(
       hintText: hintText,
-      hintStyle: TextFieldStyles.hintText,
+      hintStyle: TextStyle(color: AppConstants.darkViolet.withOpacity(0.7)),
       filled: true,
-      fillColor: Colors.white.withOpacity(0.9),
+      fillColor: Colors.white,
+      prefixIcon: Icon(icon, color: AppConstants.darkViolet),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
         borderSide: BorderSide.none,
       ),
-      prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppTextStyles.mediumPurple) : null,
-      suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: AppTextStyles.mediumPurple) : null,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+        borderSide: BorderSide(color: AppConstants.darkViolet.withOpacity(0.3)),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(AppConstants.borderRadiusMedium)),
+        borderSide: BorderSide(color: AppConstants.darkViolet),
+      ),
       contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
     );
   }
+
+  static const TextStyle textStyle = TextStyle(
+    color: AppConstants.darkViolet,
+    fontSize: 16,
+  );
 }

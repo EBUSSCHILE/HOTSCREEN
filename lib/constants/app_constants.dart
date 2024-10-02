@@ -6,6 +6,9 @@ class AppConstants {
   static const Color primaryColor = Colors.blue; // Ajusta según tu esquema de colores
   static const Color secondaryColor = Colors.white;
   static const Color accentColor = Colors.orange; // Ajusta según tu esquema de colores
+  static const Color darkViolet = Color(0xFF4A148C); // Violeta oscuro para iconos y texto
+  static const Color inputBackgroundColor = Colors.white;
+  static const Color inputBorderColor = Color(0xFFE0E0E0); // Gris claro para el borde
 
   // Tamaños
   static const double paddingSmall = 8.0;
@@ -29,6 +32,6 @@ class AppConstants {
 }
 
 class AppColors {
-  static const Color buttonColor = Color(0xFF4A148C); // Violeta oscuro
+  static const Color buttonColor = AppConstants.darkViolet;
   static const Color buttonTextColor = Colors.white;
 }

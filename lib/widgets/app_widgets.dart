@@ -38,7 +38,7 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-enum ButtonSize { small, medium, large }
+// Eliminamos la enumeración ButtonSize si no se usa en ninguna parte
 
 class SettingsButton extends StatelessWidget {
   const SettingsButton({super.key});
@@ -165,18 +165,35 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: TextField(
-        obscureText: isPassword,
-        decoration: InputDecoration(
-          hintText: hintText,
-          prefixIcon: Icon(icon, color: Colors.grey),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    // Calculamos el 60% del ancho de la pantalla
+    final width = MediaQuery.of(context).size.width * 0.6;
+    
+    return Center(
+      child: SizedBox(
+        width: width,
+        child: TextField(
+          obscureText: isPassword,
+          style: const TextStyle(color: AppConstants.darkViolet),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(color: AppConstants.darkViolet.withOpacity(0.7)),
+            prefixIcon: Icon(icon, color: AppConstants.darkViolet),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+              borderSide: BorderSide(color: AppConstants.darkViolet.withOpacity(0.3)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+              borderSide: const BorderSide(color: AppConstants.darkViolet),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          ),
         ),
       ),
     );
@@ -276,4 +293,29 @@ class SomeWidget extends StatelessWidget {
   }
 
   final String someProperty = 'Valor';
+}
+
+class ResponsiveLogo extends StatelessWidget {
+  final String largeLogo;
+  final String smallLogo;
+  final double widthFactor;
+
+  const ResponsiveLogo({
+    super.key,
+    required this.largeLogo,
+    required this.smallLogo,
+    this.widthFactor = 0.8,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLargeScreen = screenWidth > 600;
+
+    return Image.asset(
+      isLargeScreen ? largeLogo : smallLogo,
+      width: screenWidth * widthFactor,
+      fit: BoxFit.contain,
+    );
+  }
 }

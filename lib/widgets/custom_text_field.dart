@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import '../styles/text_field_styles.dart';
+import '../constants/app_constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String? hintText;
-  final IconData? prefixIcon;
-  final IconData? suffixIcon;
-  final bool obscureText;
+  final String hintText;
+  final IconData icon;
+  final bool isPassword;
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
 
   const CustomTextField({
     super.key,
-    this.hintText,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.obscureText = false,
+    required this.hintText,
+    required this.icon,
+    this.isPassword = false,
     this.controller,
     this.onChanged,
   });
@@ -23,13 +21,28 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      obscureText: obscureText,
+      obscureText: isPassword,
       onChanged: onChanged,
-      style: TextFieldStyles.inputText,
-      decoration: TextFieldStyles.getDecoration(
+      style: const TextStyle(color: AppConstants.darkViolet),
+      decoration: InputDecoration(
         hintText: hintText,
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
+        hintStyle: TextStyle(color: AppConstants.darkViolet.withOpacity(0.7)),
+        filled: true,
+        fillColor: AppConstants.inputBackgroundColor,
+        prefixIcon: Icon(icon, color: AppConstants.darkViolet),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+          borderSide: const BorderSide(color: AppConstants.inputBorderColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+          borderSide: const BorderSide(color: AppConstants.inputBorderColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+          borderSide: const BorderSide(color: AppConstants.darkViolet),
+        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       ),
     );
   }
