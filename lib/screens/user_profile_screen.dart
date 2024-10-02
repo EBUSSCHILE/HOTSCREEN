@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_app_bar_with_user_and_title.dart';
+import '../widgets/app_widgets.dart' as app_widgets;
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -41,11 +42,11 @@ class UserProfileScreen extends StatelessWidget {
               _buildInfoItem(Icons.location_on, 'Ubicación', 'Ciudad, País'),
               const SizedBox(height: 30),
               Center(
-                child: ElevatedButton(
+                child: app_widgets.CustomButton(
+                  texto: 'Editar Perfil',
                   onPressed: () {
                     // Lógica para editar perfil
                   },
-                  child: const Text('Editar Perfil'),
                 ),
               ),
             ],

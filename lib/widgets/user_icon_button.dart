@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/user_profile_screen.dart';
 import '../screens/settings_screen.dart';
-import '../screens/login_home_screen.dart'; // Corregimos esta importación
+import '../screens/login_screen.dart'; // Actualizamos esta importación
 
 class UserIconButton extends StatelessWidget {
   const UserIconButton({super.key});
@@ -99,7 +99,7 @@ class UserIconButton extends StatelessWidget {
 
     // Navegar a la pantalla de login
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const LoginHomeScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
       (Route<dynamic> route) => false,
     );
   }

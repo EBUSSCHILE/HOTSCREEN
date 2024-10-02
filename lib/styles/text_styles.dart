@@ -98,4 +98,10 @@ class AppTextStyles {
     fontSize: 16,
     color: Colors.white70,
   );
+
+  static const TextStyle headerStyle = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
+  // Añade más estilos según sea necesario
 }

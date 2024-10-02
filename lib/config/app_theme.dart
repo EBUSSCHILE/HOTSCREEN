@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
-import '../styles/text_styles.dart';
-// Eliminamos la siguiente línea:
-// import 'package:shared_preferences/shared_preferences.dart';
+import '../constants/app_constants.dart';
+import '../styles/app_styles.dart';
 
 class AppTheme {
-  // Definimos el color de fondo azul oscuro
-  static const Color backgroundColor = Color(0xFF000080); // Este es el azul oscuro de la imagen
-
   static ThemeData get lightTheme {
     return ThemeData(
-      scaffoldBackgroundColor: backgroundColor,
+      scaffoldBackgroundColor: AppConstants.backgroundColor,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        iconTheme: IconThemeData(color: AppConstants.secondaryColor),
+        titleTextStyle: AppStyles.headingMedium,
       ),
       textTheme: const TextTheme(
-        displayLarge: AppTextStyles.tooBig,
-        displayMedium: AppTextStyles.big,
-        bodyLarge: AppTextStyles.medium,
-        bodyMedium: AppTextStyles.small,
-        bodySmall: AppTextStyles.micro,
+        displayLarge: AppStyles.headingLarge,
+        displayMedium: AppStyles.headingMedium,
+        bodyLarge: AppStyles.bodyLarge,
+        bodyMedium: AppStyles.bodyMedium,
+        bodySmall: AppStyles.bodySmall,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: AppStyles.primaryButtonStyle,
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: AppStyles.secondaryButtonStyle,
       ),
       // Otros ajustes del tema...
     );
   }
 
   static ThemeData get darkTheme {
-    return ThemeData(
-      scaffoldBackgroundColor: backgroundColor, // Usamos el mismo color para el tema oscuro
-      // Otros ajustes del tema oscuro...
-    );
+    // Por ahora, usaremos el mismo tema que el claro
+    // En el futuro, puedes personalizar esto para un tema oscuro específico
+    return lightTheme;
   }
 }

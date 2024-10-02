@@ -44,6 +44,7 @@ flutter:
     - assets/images/x_logo.png
     - assets/images/background_pattern.svg
     - assets/images/google_icon_02.png
+    - assets/images/default_avatar.png
   fonts:
     - family: Noto Sans
       fonts:

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../styles/text_styles.dart';
-import '../widgets/custom_text_field.dart';
-import '../widgets/custom_button.dart';
+import '../widgets/app_widgets.dart' as app_widgets;
 import 'categories_menu_screen.dart';
+import '../styles/text_styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hotscreen/styles/button_styles.dart';
+import '../constants/home_leyend.dart';
 
-class LoginHomeScreen extends StatelessWidget {
-  const LoginHomeScreen({super.key});
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +31,13 @@ class LoginHomeScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Easy and quick\nLearn Language\nonline!',
+                    ...HomeLeyend.loginHeaderTexts.map((text) => Text(
+                      text,
                       style: AppTextStyles.tooBig.copyWith(color: Colors.white),
-                    ),
+                    )),
                     const SizedBox(height: 40),
                     Center(
                       child: Image.asset(
@@ -45,28 +46,19 @@ class LoginHomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    const CustomTextField(
-                      hintText: 'Email',
-                      prefixIcon: Icons.email,
+                    const app_widgets.CustomTextField(
+                      hintText: 'Username',
+                      icon: Icons.person,
                     ),
                     const SizedBox(height: 20),
-                    const CustomTextField(
+                    const app_widgets.CustomTextField(
                       hintText: 'Password',
-                      prefixIcon: Icons.lock,
-                      suffixIcon: Icons.visibility,
-                      obscureText: true,
+                      icon: Icons.lock,
+                      isPassword: true,
                     ),
                     const SizedBox(height: 30),
-                    CustomButton(
+                    app_widgets.CustomButton(
                       texto: 'LOG IN',
-                      onPressed: () {
-                        // Lógica para iniciar sesión
-                      },
-                      tamano: ButtonSize.medium,
-                    ),
-                    const SizedBox(height: 15),
-                    CustomButton(
-                      texto: 'START',
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -74,7 +66,7 @@ class LoginHomeScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      tamano: ButtonSize.medium,
+                      width: MediaQuery.of(context).size.width * 0.8,
                     ),
                     const SizedBox(height: 20),
                     TextButton(

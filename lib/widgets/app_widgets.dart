@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../constants/app_constants.dart';
 // Elimina esta importación si no se usa
 // import '../config/app_config.dart';
 import '../screens/settings_screen.dart';
 import '../screens/user_profile_screen.dart';
-// Elimina estas importaciones no utilizadas
+// Elimina esta importación si ya no se usa
 // import '../screens/login_home_screen.dart';
 // import '../services/auth_service.dart';
 
@@ -27,11 +28,17 @@ class CustomButton extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.buttonColor,
+          foregroundColor: AppColors.buttonTextColor,
+        ),
         child: Text(texto),
       ),
     );
   }
 }
+
+enum ButtonSize { small, medium, large }
 
 class SettingsButton extends StatelessWidget {
   const SettingsButton({super.key});

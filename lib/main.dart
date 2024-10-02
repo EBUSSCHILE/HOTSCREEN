@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hotscreen/providers/theme_provider.dart';
-import 'package:hotscreen/screens/login_home_screen.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(
@@ -22,7 +22,11 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'HotScreen',
           theme: themeProvider.theme,  // Cambiado de getTheme() a theme
-          home: const LoginHomeScreen(),
+          home: const LoginScreen(),
+          routes: {
+            '/login': (context) => const LoginScreen(),
+            // ... otras rutas ...
+          },
         );
       },
     );
