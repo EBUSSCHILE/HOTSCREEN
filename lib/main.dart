@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:hotscreen/providers/theme_provider.dart';
+import 'providers/theme_provider.dart';
 import 'screens/login_screen.dart';
 
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+      create: (context) => ThemeProvider(),
       child: const MyApp(),
     ),
   );
@@ -17,18 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        return MaterialApp(
-          title: 'HotScreen',
-          theme: themeProvider.theme,  // Cambiado de getTheme() a theme
-          home: const LoginScreen(),
-          routes: {
-            '/login': (context) => const LoginScreen(),
-            // ... otras rutas ...
-          },
-        );
-      },
+    return MaterialApp(
+      title: 'HotScreen',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Provider.of<ThemeProvider>(context).backgroundColor,
+      ),
+      home: const LoginScreen(),
     );
   }
 }

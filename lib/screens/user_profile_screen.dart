@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/custom_app_bar_with_user_and_title.dart';
-import '../widgets/app_widgets.dart' as app_widgets;
+import '../widgets/standard_app_bar.dart';
+import '../widgets/custom_button.dart'; // Mantén esta importación si se usa en alguna parte
+// Importa otros widgets individuales según sea necesario
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -8,9 +9,8 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWithUserAndTitle(
+      appBar: const StandardAppBar(
         title: 'Perfil de Usuario',
-        showBackButton: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -42,7 +42,7 @@ class UserProfileScreen extends StatelessWidget {
               _buildInfoItem(Icons.location_on, 'Ubicación', 'Ciudad, País'),
               const SizedBox(height: 30),
               Center(
-                child: app_widgets.CustomButton(
+                child: CustomButton(
                   texto: 'Editar Perfil',
                   onPressed: () {
                     // Lógica para editar perfil

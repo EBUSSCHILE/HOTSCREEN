@@ -19,30 +19,37 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: isPassword,
-      onChanged: onChanged,
-      style: const TextStyle(color: AppConstants.darkViolet),
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(color: AppConstants.darkViolet.withOpacity(0.7)),
-        filled: true,
-        fillColor: AppConstants.inputBackgroundColor,
-        prefixIcon: Icon(icon, color: AppConstants.darkViolet),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-          borderSide: const BorderSide(color: AppConstants.inputBorderColor),
+    final width = MediaQuery.of(context).size.width * 0.6;
+    
+    return Center(
+      child: SizedBox(
+        width: width,
+        child: TextField(
+          controller: controller,
+          obscureText: isPassword,
+          onChanged: onChanged,
+          style: const TextStyle(color: AppConstants.darkViolet),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(color: AppConstants.standardTextColor.withOpacity(0.7)),
+            prefixIcon: Icon(icon, color: AppConstants.darkViolet),
+            filled: true,
+            fillColor: AppConstants.inputBackgroundColor,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+              borderSide: BorderSide(color: AppConstants.darkViolet.withOpacity(0.3)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
+              borderSide: const BorderSide(color: AppConstants.darkViolet),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-          borderSide: const BorderSide(color: AppConstants.inputBorderColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-          borderSide: const BorderSide(color: AppConstants.darkViolet),
-        ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       ),
     );
   }
