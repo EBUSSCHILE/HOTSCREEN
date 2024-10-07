@@ -21,7 +21,7 @@ class UserIconButton extends StatelessWidget {
           case 'settings':
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              MaterialPageRoute(builder: (context) => SettingsScreen()),  // Removemos 'const'
             );
             break;
           case 'logout':

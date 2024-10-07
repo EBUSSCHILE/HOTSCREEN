@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import '../widgets/standard_app_bar.dart';
+import 'package:logging/logging.dart';
+
 import '../constants/app_constants.dart';
 import '../widgets/app_background.dart';
 import '../widgets/settings_button.dart';
 import '../widgets/settings_item.dart';
+import '../widgets/standard_app_bar.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  SettingsScreen({super.key}) {
+    _logger = Logger('SettingsScreen');
+  }
+
+  late final Logger _logger;
 
   @override
   Widget build(BuildContext context) {
@@ -20,29 +26,48 @@ class SettingsScreen extends StatelessWidget {
         body: ListView(
           padding: const EdgeInsets.all(AppConstants.paddingMedium),
           children: [
-            SettingsItem(
-              title: 'Notificaciones',
-              trailing: SettingsButton(
-                isOn: true,
-                onChanged: (bool value) {
-                  // Lógica para cambiar las notificaciones
-                },
-              ),
-            ),
-            const SizedBox(height: AppConstants.paddingMedium),
-            SettingsItem(
-              title: 'Tema Oscuro',
-              trailing: SettingsButton(
-                isOn: false,
-                onChanged: (bool value) {
-                  // Lógica para cambiar el tema
-                },
-              ),
-            ),
-            // ... Más opciones de configuración
+            _buildThemeToggle(),
+            const SizedBox(height: 20),
+            _buildNotificationSettings(context),
+            const SizedBox(height: 20),
+            _buildPrivacySettings(context),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildThemeToggle() {
+    return SettingsItem(
+      title: 'Tema Oscuro',
+      trailing: SettingsButton(
+        isOn: false,
+        onChanged: _handleThemeChange,
+      ),
+    );
+  }
+
+  Widget _buildNotificationSettings(BuildContext context) {
+    return SettingsItem(
+      title: 'Notificaciones',
+      trailing: const Icon(Icons.arrow_forward_ios, color: AppConstants.standardTextColor),
+      onTap: () {
+        _logger.info('Navegando a configuración de notificaciones');
+      },
+    );
+  }
+
+  Widget _buildPrivacySettings(BuildContext context) {
+    return SettingsItem(
+      title: 'Privacidad',
+      trailing: const Icon(Icons.arrow_forward_ios, color: AppConstants.standardTextColor),
+      onTap: () {
+        _logger.info('Navegando a configuración de privacidad');
+      },
+    );
+  }
+
+  void _handleThemeChange(bool value) {
+    _logger.info('Cambio de tema: $value');
   }
 }

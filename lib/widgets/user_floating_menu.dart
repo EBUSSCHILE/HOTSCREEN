@@ -4,7 +4,7 @@ import '../screens/settings_screen.dart';
 import '../screens/login_screen.dart';
 
 class UserFloatingMenu extends StatelessWidget {
-  const UserFloatingMenu({super.key}); // Añadimos el parámetro key
+  const UserFloatingMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class UserFloatingMenu extends StatelessWidget {
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),
             onTap: () {
-              Navigator.pop(context); // Cierra el menú flotante
+              Navigator.pop(context);
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const UserProfileScreen(),
               ));
@@ -27,9 +27,9 @@ class UserFloatingMenu extends StatelessWidget {
             leading: const Icon(Icons.settings),
             title: const Text('Configuración'),
             onTap: () {
-              Navigator.pop(context); // Cierra el menú flotante
+              Navigator.pop(context);
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SettingsScreen(),
+                builder: (context) => SettingsScreen(),
               ));
             },
           ),

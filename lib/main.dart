@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
-import 'config/app_theme.dart';
-import 'screens/login_screen.dart'; // Importamos LoginScreen en lugar de SettingsScreen
+import 'package:provider/provider.dart';
+import 'models/color_model.dart';
+import 'services/auth_service.dart';
+import 'styles/app_theme.dart';
+import 'config/routes.dart';
+import 'utils/error_handler.dart';
 
 void main() {
-  runApp(const MyApp());
+  ErrorHandler.init();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ColorModel()),
+        ChangeNotifierProvider(create: (_) => AuthService()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +27,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'HotScreen',
       theme: AppTheme.lightTheme,
-      home: const LoginScreen(), // Usamos LoginScreen como pantalla inicial
+      initialRoute: Routes.login,
+      routes: Routes.getRoutes(),
     );
   }
 }

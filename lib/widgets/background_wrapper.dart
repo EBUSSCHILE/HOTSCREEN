@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
+import '../models/color_model.dart';
 
 class BackgroundWrapper extends StatelessWidget {
   final Widget child;
@@ -9,11 +9,11 @@ class BackgroundWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return Container(
-      color: themeProvider.backgroundColor,
-      child: child,
+    return Consumer<ColorModel>(
+      builder: (context, colorModel, _) => Container(
+        color: colorModel.backgroundColor,
+        child: child,
+      ),
     );
   }
 }

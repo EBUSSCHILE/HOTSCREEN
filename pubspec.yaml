@@ -1,49 +1,29 @@
 name: hotscreen
-description: "A new Flutter project hotscreen."
-publish_to: 'none'
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: '>=3.0.5 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_colorpicker: ^1.1.0  # Agrega esta línea
-  #firebase_auth: ^5.2.0
-  google_sign_in: ^6.2.1
-  logging: ^1.2.0
-  cupertino_icons: ^1.0.6
-  http: ^1.2.2
-  universal_io: ^2.2.2
-  shared_preferences: ^2.2.2  # Usa la versión más reciente
-  provider: ^6.0.0  # o la versión más reciente
-  flutter_svg: ^2.0.9  # Añade esta línea (usa la versión más reciente)
+  cupertino_icons: ^1.0.2
+  logging: ^1.1.1
+  provider: ^6.0.5
   simple_animations: ^5.0.2
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  flutter_launcher_icons: ^0.14.1
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/hotscreen_isotipo_64x64.png"
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/hotscreen_logo_300x89.png
-    - assets/images/hotscreen_sinfondo.png
-    - assets/images/x_logo.png
-    - assets/images/background_pattern.svg
-    - assets/images/google_icon_02.png
-    - assets/images/default_avatar.png
-  fonts:
-    - family: Noto Sans
-      fonts:
-        - asset: assets/fonts/NotoSans-Regular.ttf
-        - asset: assets/fonts/NotoSans-Bold.ttf
-          weight: 700
+    - assets/images/
+    # - assets/icons/app_icon.ico  # Comentamos esta línea si el archivo no existe

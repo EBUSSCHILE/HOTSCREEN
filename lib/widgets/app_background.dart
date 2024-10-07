@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // Importa el paquete flutter_svg
+import '../constants/app_constants.dart';
 
 class AppBackground extends StatelessWidget {
   final Widget child;
@@ -8,16 +8,11 @@ class AppBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SvgPicture.asset(
-          'assets/images/background_pattern.svg',
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
-        ),
-        child, // El contenido de la aplicación se superpone al fondo
-      ],
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppConstants.backgroundColor,
+      ),
+      child: child,
     );
   }
 }

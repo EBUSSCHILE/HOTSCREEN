@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
-import '../widgets/custom_text_field.dart';
-import '../widgets/custom_button.dart';
-import 'categories_menu_screen.dart';
-import '../constants/home_leyend.dart';
-import '../constants/app_constants.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../constants/app_constants.dart';
+import '../constants/home_leyend.dart';
+import '../widgets/app_logo.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_text_field.dart';
+import '../widgets/text_button.dart';
+import '../config/routes.dart';
+import '../utils/error_handler.dart';
+import '../services/auth_service.dart';
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,28 +51,42 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(height: 40),
                         _buildHeaderText(),
                         const SizedBox(height: 40),
-                        _buildLogo(context),
+                        const AppLogo(),
                         const SizedBox(height: 40),
-                        const CustomTextField(
+                        CustomTextField(
                           hintText: 'Username',
                           icon: Icons.person,
+                          controller: _usernameController,
                         ),
                         const SizedBox(height: 20),
-                        const CustomTextField(
+                        CustomTextField(
                           hintText: 'Password',
                           icon: Icons.lock,
                           isPassword: true,
+                          controller: _passwordController,
                         ),
                         const SizedBox(height: 30),
-                        CustomButton(
-                          texto: 'LOG IN',
-                          onPressed: () => _navigateToCategoriesMenu(context),
-                          width: MediaQuery.of(context).size.width * 0.6,
+                        _isLoading
+                            ? const CircularProgressIndicator()
+                            : CustomButton(
+                                text: 'LOG IN',
+                                onPressed: _handleLogin,
+                                size: ButtonSize.large,
+                              ),
+                        const SizedBox(height: 20),
+                        CustomTextButton(
+                          text: '¿Olvidaste tu contraseña?',
+                          onPressed: () {
+                            // Implementar lógica para "Olvidé mi contraseña"
+                          },
                         ),
                         const SizedBox(height: 20),
-                        _buildForgotPasswordButton(context),
-                        const SizedBox(height: 20),
-                        _buildSignUpButton(context),
+                        CustomTextButton(
+                          text: '¿No tienes una cuenta? Regístrate',
+                          onPressed: () {
+                            // Implementar lógica para "Registrarse"
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -65,71 +101,58 @@ class LoginScreen extends StatelessWidget {
 
   Widget _buildHeaderText() {
     return Column(
-      children: HomeLeyend.loginHeaderTexts.map((text) => Text(
-        text,
-        style: const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: AppConstants.standardTextColor,
-        ),
-        textAlign: TextAlign.center,
-      )).toList(),
+      children: HomeLeyend.loginHeaderTexts
+          .map((text) => Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppConstants.standardTextColor,
+                ),
+                textAlign: TextAlign.center,
+              ))
+          .toList(),
     );
   }
 
-  Widget _buildLogo(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double logoWidth;
+  void _handleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
 
-    if (screenWidth > 1200) {
-      logoWidth = screenWidth * 0.3;
-    } else if (screenWidth > 600) {
-      logoWidth = screenWidth * 0.4;
-    } else {
-      logoWidth = screenWidth * 0.6;
+    try {
+      // Usamos Provider.of con listen: false para evitar reconstrucciones innecesarias
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final success = await authService.login(
+        _usernameController.text,
+        _passwordController.text,
+      );
+
+      if (mounted) {
+        if (success) {
+          // Navegamos directamente a la pantalla de categorías
+          Navigator.of(context).pushReplacementNamed(Routes.categoriesMenu);
+        } else {
+          ErrorHandler.showErrorDialog(
+            context,
+            'Credenciales inválidas. Por favor, intenta de nuevo.',
+          );
+        }
+      }
+    } catch (e, stack) {
+      ErrorHandler.logError('Error durante el inicio de sesión', e, stack);
+      if (mounted) {
+        ErrorHandler.showErrorDialog(
+          context,
+          'Ocurrió un error durante el inicio de sesión. Por favor, intenta de nuevo.',
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
-
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: logoWidth,
-        maxHeight: logoWidth * 0.3,
-      ),
-      child: Image.asset(
-        'assets/images/hotscreen_sinfondo.png',
-        fit: BoxFit.contain,
-      ),
-    );
-  }
-
-  void _navigateToCategoriesMenu(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const CategoriesMenuScreen(),
-      ),
-    );
-  }
-
-  Widget _buildForgotPasswordButton(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        // Implementar lógica para "Olvidé mi contraseña"
-      },
-      child: const Text(
-        '¿Olvidaste tu contraseña?',
-        style: TextStyle(color: AppConstants.standardTextColor),
-      ),
-    );
-  }
-
-  Widget _buildSignUpButton(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        // Implementar lógica para "Registrarse"
-      },
-      child: const Text(
-        '¿No tienes una cuenta? Regístrate',
-        style: TextStyle(color: AppConstants.standardTextColor),
-      ),
-    );
   }
 }

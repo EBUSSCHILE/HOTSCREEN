@@ -171,3 +171,7 @@ Las contribuciones son bienvenidas. Por favor, abre un issue para discutir cambi
 - Windows: El icono para la versión de escritorio se encuentra en `windows/runner/resources/app_icon.ico`. Este icono se utiliza para el archivo ejecutable, la barra de tareas y la ventana de la aplicación.
 
 Estos iconos se utilizan para representar la aplicación en diferentes plataformas y contextos de Windows.
+
+## TODOs
+
+- Implementar lógica para editar perfil en la pantalla de perfil de usuario.

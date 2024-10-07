@@ -40,6 +40,20 @@ class AppConstants {
   static const Duration animationDurationLong = Duration(milliseconds: 1000);
 
   static const Color standardBackgroundColor = darkViolet;
+
+  // Añade estas nuevas constantes
+  static const Color lightSwitchThumbColor = Colors.white;
+  static const Color lightSwitchInactiveThumbColor = Colors.grey;
+  static const Color lightInputBackgroundColor = Colors.white;
+
+  // Tamaños de botón
+  static const double buttonWidthSmall = 120.0;
+  static const double buttonWidthMedium = 160.0;
+  static const double buttonWidthLarge = 200.0;
+
+  static const double buttonFontSizeSmall = 14.0;
+  static const double buttonFontSizeMedium = 16.0;
+  static const double buttonFontSizeLarge = 18.0;
 }
 
 class AppColors {
