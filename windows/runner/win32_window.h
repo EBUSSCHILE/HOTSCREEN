@@ -28,13 +28,15 @@ class Win32Window {
   Win32Window();
   virtual ~Win32Window();
 
-  // Creates a win32 window with |title| that is positioned and sized using
+  // Creates and shows a win32 window with |title| and position and size using
   // |origin| and |size|. New windows are created on the default monitor. Window
   // sizes are specified to the OS in physical pixels, hence to ensure a
-  // consistent size this function will scale the inputted width and height as
-  // as appropriate for the default monitor. The window is invisible until
-  // |Show| is called. Returns true if the window was created successfully.
-  bool Create(const std::wstring& title, const Point& origin, const Size& size);
+  // consistent size to will treat the width height passed in to this function
+  // as logical pixels and scale to appropriate for the default monitor. Returns
+  // true if the window was created successfully.
+  bool Create(const std::wstring& title,
+              const Point& origin,
+              const Size& size);
 
   // Show the current window. Returns true if the window was successfully shown.
   bool Show();
@@ -54,6 +56,16 @@ class Win32Window {
 
   // Return a RECT representing the bounds of the current client area.
   RECT GetClientArea();
+
+  // Creates and shows a win32 window with |title| and position and size using
+  // |origin| and |size|. New windows are created on the default monitor. Window
+  // sizes are specified to the OS in physical pixels, hence to ensure a
+  // consistent size to will treat the width height passed in to this function
+  // as logical pixels and scale to appropriate for the default monitor. Returns
+  // true if the window was created successfully.
+  bool CreateAndShow(const std::wstring& title,
+                     const Point& origin,
+                     const Size& size);
 
  protected:
   // Processes and route salient window messages for mouse handling,
@@ -97,6 +109,8 @@ class Win32Window {
 
   // window handle for hosted content.
   HWND child_content_ = nullptr;
+
+  static WNDCLASS RegisterWindowClass();
 };
 
 #endif  // RUNNER_WIN32_WINDOW_H_
