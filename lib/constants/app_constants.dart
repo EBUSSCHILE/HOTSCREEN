@@ -2,21 +2,28 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   // Colores principales
-  static const Color backgroundColor = Color(0xFF000080); // Azul oscuro
-  static const Color darkViolet = Color(0xFF4A148C);
+  static const Color backgroundColor = Color(0xFF4A0E4E); // Violeta oscuro (fondo principal)
+  static const Color darkViolet = Color(0xFF4A0E4E);
   static const Color marengo = Color(0xFF4A4E69);
-  static const Color primaryColor = Colors.blue;
-  static const Color secondaryColor = Colors.white;
-  static const Color accentColor = Colors.orange;
+  static const Color primaryColor = Color(0xFF8E24AA); // Violeta más claro para elementos interactivos
+  static const Color secondaryColor = Color(0xFFFFD54F); // Amarillo más suave para acentos
+  static const Color accentColor = Color(0xFFFF6E40); // Naranja para elementos de acción
 
   // Colores de la AppBar
-  static const Color appBarBackgroundColor = Color(0xFF4A148C); // Violeta oscuro
+  static const Color appBarBackgroundColor = backgroundColor;
   static const Color appBarTextColor = Colors.white;
   static const Color appBarIconColor = Colors.white;
 
-  // Colores de entrada
-  static const Color inputBackgroundColor = secondaryColor;
-  static const Color inputBorderColor = Color(0xFFE0E0E0);
+  // Colores de entrada y configuración
+  static const Color inputBackgroundColor = Color(0xFF6A2E72); // Violeta más claro para fondos de entrada
+  static const Color inputBorderColor = Color(0xFF8E24AA); // Borde del mismo color que primaryColor
+  static const Color inputHintColor = Color(0xFFBDBDBD); // Gris claro para texto de sugerencia
+  static const Color settingsItemBackgroundColor = inputBackgroundColor;
+  static const Color optionTextColor = Colors.white;
+
+  // Otros colores
+  static const Color buttonTextColor = Colors.white;
+  static const Color standardTextColor = Colors.white;
 
   // Tamaños
   static const double paddingSmall = 8.0;
@@ -32,16 +39,7 @@ class AppConstants {
   static const Duration animationDurationMedium = Duration(milliseconds: 500);
   static const Duration animationDurationLong = Duration(milliseconds: 1000);
 
-  // Colores de botones
-  static const Color buttonTextColor = Colors.white;
-
-  // Añadimos esta línea
-  static const Color optionTextColor = secondaryColor;
-
   static const Color standardBackgroundColor = darkViolet;
-
-  // Nuevo color estándar para textos
-  static const Color standardTextColor = Colors.white;
 }
 
 class AppColors {

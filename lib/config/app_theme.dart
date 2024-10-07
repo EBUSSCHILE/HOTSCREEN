@@ -1,37 +1,32 @@
 import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
-import '../styles/app_styles.dart';
 
 class AppTheme {
+  static Color get backgroundColor => AppConstants.backgroundColor;
+  static Color get appBarColor => AppConstants.appBarBackgroundColor;
+  static Color get primaryColor => AppConstants.primaryColor;
+  static Color get textColor => AppConstants.standardTextColor;
+
   static ThemeData get lightTheme {
     return ThemeData(
-      scaffoldBackgroundColor: AppConstants.backgroundColor,
+      primaryColor: primaryColor,
+      scaffoldBackgroundColor: backgroundColor,
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: AppConstants.secondaryColor),
-        titleTextStyle: AppStyles.headingMedium,
+        backgroundColor: AppConstants.appBarBackgroundColor,
+        foregroundColor: AppConstants.standardTextColor,
       ),
       textTheme: const TextTheme(
-        displayLarge: AppStyles.headingLarge,
-        displayMedium: AppStyles.headingMedium,
-        bodyLarge: AppStyles.bodyLarge,
-        bodyMedium: AppStyles.bodyMedium,
-        bodySmall: AppStyles.bodySmall,
+        bodyLarge: TextStyle(color: AppConstants.standardTextColor),
+        bodyMedium: TextStyle(color: AppConstants.standardTextColor),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: AppStyles.primaryButtonStyle,
+      inputDecorationTheme: const InputDecorationTheme(
+        fillColor: AppConstants.inputBackgroundColor,
+        filled: true,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: AppConstants.inputBorderColor),
+        ),
+        hintStyle: TextStyle(color: AppConstants.inputHintColor),
       ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: AppStyles.secondaryButtonStyle,
-      ),
-      // Otros ajustes del tema...
     );
-  }
-
-  static ThemeData get darkTheme {
-    // Por ahora, usaremos el mismo tema que el claro
-    // En el futuro, puedes personalizar esto para un tema oscuro específico
-    return lightTheme;
   }
 }

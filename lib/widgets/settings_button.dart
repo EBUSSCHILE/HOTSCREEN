@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import '../constants/app_constants.dart';
 
 class SettingsButton extends StatelessWidget {
-  const SettingsButton({super.key});
+  final bool isOn;
+  final ValueChanged<bool> onChanged;
+
+  const SettingsButton({
+    super.key,
+    required this.isOn,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.settings),
-      onPressed: () {
-        // Implementar lógica de configuración
-      },
+    return Switch(
+      value: isOn,
+      onChanged: onChanged,
+      activeColor: AppConstants.primaryColor,
     );
   }
 }

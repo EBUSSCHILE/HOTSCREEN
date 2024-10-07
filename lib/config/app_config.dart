@@ -23,7 +23,5 @@ class AppConfig extends StatelessWidget {
     );
   }
 
-  static ThemeData getTheme() {
-    return AppTheme.lightTheme;
-  }
+  static ThemeData get theme => AppTheme.lightTheme;  // Esta línea causa el error
 }

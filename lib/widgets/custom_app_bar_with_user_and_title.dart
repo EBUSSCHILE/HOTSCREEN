@@ -1,35 +1,39 @@
 import 'package:flutter/material.dart';
-import 'user_icon_button.dart'; // Asegúrate de que esta ruta es correcta
+import '../constants/app_constants.dart';
+import 'user_icon.dart';
 
 class CustomAppBarWithUserAndTitle extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
-  final VoidCallback? onBackPressed;
+  final Color? backgroundColor;
 
   const CustomAppBarWithUserAndTitle({
     super.key,
     required this.title,
     this.showBackButton = false,
-    this.onBackPressed,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: backgroundColor ?? AppConstants.appBarBackgroundColor,
+      title: Text(
+        title,
+        style: const TextStyle(color: AppConstants.appBarTextColor),
+      ),
       leading: showBackButton
           ? IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.arrow_back, color: AppConstants.appBarIconColor),
+              onPressed: () => Navigator.of(context).pop(),
             )
           : null,
-      title: Text(title),
       actions: const [
         Padding(
-          padding: EdgeInsets.only(right: 50.0), // 50 píxeles del margen derecho
-          child: UserIconButton(), // Reintroducir el UserIconButton
+          padding: EdgeInsets.only(right: AppConstants.paddingMedium),
+          child: UserIcon(size: 32), // Mantenemos el tamaño ajustado para la AppBar
         ),
       ],
-      backgroundColor: Theme.of(context).primaryColor, // Mantener el color del tema
     );
   }
 
