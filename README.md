@@ -2,6 +2,10 @@
 
 HotScreen es una aplicación Flutter desarrollada en Cursor IDE que ofrece una experiencia de usuario interactiva y personalizable.
 
+## Versión Actual
+
+v1.1.1 - Más Refactorización profunda
+
 ## System Prompt para CURSOR IDE
 
 <custom_instructions>
