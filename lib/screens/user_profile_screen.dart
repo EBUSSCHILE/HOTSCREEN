@@ -93,9 +93,8 @@ class UserProfileScreen extends StatelessWidget {
     return CustomButton(
       text: 'Editar Perfil',
       onPressed: () {
-        // Implementar lógica para editar perfil
+        // Acción del botón
       },
-      size: ButtonSize.large,
     );
   }
 }

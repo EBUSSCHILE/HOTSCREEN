@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../constants/app_constants.dart';
-import '../constants/home_leyend.dart';
-import '../widgets/app_logo.dart';
-import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
-import '../widgets/text_button.dart';
-import '../config/routes.dart';
-import '../utils/error_handler.dart';
-import '../services/auth_service.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/validation_wrapper.dart';
+import '../constants/app_constants.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,138 +14,114 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  // ignore: prefer_final_fields
   bool _isLoading = false;
+
+  void _handleLogin() {
+    // Implementar lógica de inicio de sesión
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppConstants.backgroundColor,
+      body: ValidationWrapper(
+        componentName: 'LoginScreen',
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 50),
+                ValidationWrapper(
+                  componentName: 'HeaderText',
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    child: const Text(
+                      'Easy and quick\nLearn Language\nonline!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                ValidationWrapper(
+                  componentName: 'AppLogo',
+                  child: Image.asset(
+                    'assets/images/hotscreen_sinfondo.png',
+                    height: 100,
+                  ),
+                ),
+                const SizedBox(height: 40),
+                ValidationWrapper(
+                  componentName: 'UsernameField',
+                  child: CustomTextField(
+                    controller: _usernameController,
+                    hintText: 'Usuario',
+                    icon: Icons.person,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ValidationWrapper(
+                  componentName: 'PasswordField',
+                  child: CustomTextField(
+                    controller: _passwordController,
+                    hintText: 'Contraseña',
+                    icon: Icons.lock,
+                    obscureText: true,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                ValidationWrapper(
+                  componentName: 'LoginButton',
+                  child: CustomButton(
+                    text: _isLoading ? 'Cargando...' : 'LOG IN',
+                    onPressed: _isLoading ? null : _handleLogin,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ValidationWrapper(
+                  componentName: 'ForgotPasswordButton',
+                  child: TextButton(
+                    onPressed: () {
+                      // Implementar lógica para recuperar contraseña
+                    },
+                    child: const Text(
+                      '¿Olvidaste tu contraseña?',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                ValidationWrapper(
+                  componentName: 'RegisterButton',
+                  child: TextButton(
+                    onPressed: () {
+                      // Implementar lógica para registrarse
+                    },
+                    child: const Text(
+                      '¿No tienes una cuenta? Regístrate',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: IntrinsicHeight(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 40),
-                        _buildHeaderText(),
-                        const SizedBox(height: 40),
-                        const AppLogo(),
-                        const SizedBox(height: 40),
-                        CustomTextField(
-                          hintText: 'Username',
-                          icon: Icons.person,
-                          controller: _usernameController,
-                        ),
-                        const SizedBox(height: 20),
-                        CustomTextField(
-                          hintText: 'Password',
-                          icon: Icons.lock,
-                          isPassword: true,
-                          controller: _passwordController,
-                        ),
-                        const SizedBox(height: 30),
-                        _isLoading
-                            ? const CircularProgressIndicator()
-                            : CustomButton(
-                                text: 'LOG IN',
-                                onPressed: _handleLogin,
-                                size: ButtonSize.large,
-                              ),
-                        const SizedBox(height: 20),
-                        CustomTextButton(
-                          text: '¿Olvidaste tu contraseña?',
-                          onPressed: () {
-                            // Implementar lógica para "Olvidé mi contraseña"
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        CustomTextButton(
-                          text: '¿No tienes una cuenta? Regístrate',
-                          onPressed: () {
-                            // Implementar lógica para "Registrarse"
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderText() {
-    return Column(
-      children: HomeLeyend.loginHeaderTexts
-          .map((text) => Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppConstants.standardTextColor,
-                ),
-                textAlign: TextAlign.center,
-              ))
-          .toList(),
-    );
-  }
-
-  void _handleLogin() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      // Usamos Provider.of con listen: false para evitar reconstrucciones innecesarias
-      final authService = Provider.of<AuthService>(context, listen: false);
-      final success = await authService.login(
-        _usernameController.text,
-        _passwordController.text,
-      );
-
-      if (mounted) {
-        if (success) {
-          // Navegamos directamente a la pantalla de categorías
-          Navigator.of(context).pushReplacementNamed(Routes.categoriesMenu);
-        } else {
-          ErrorHandler.showErrorDialog(
-            context,
-            'Credenciales inválidas. Por favor, intenta de nuevo.',
-          );
-        }
-      }
-    } catch (e, stack) {
-      ErrorHandler.logError('Error durante el inicio de sesión', e, stack);
-      if (mounted) {
-        ErrorHandler.showErrorDialog(
-          context,
-          'Ocurrió un error durante el inicio de sesión. Por favor, intenta de nuevo.',
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
   }
 }

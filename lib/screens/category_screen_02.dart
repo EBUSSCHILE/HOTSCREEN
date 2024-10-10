@@ -7,12 +7,19 @@ class CategoryScreen02 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseCategoryScreen(
-      title: 'Categoría 2',
-      searchHint: 'Buscar en Categoría 2',
-      buttonText: 'Acción Categoría 2',
+      title: 'Categoría 02',
+      searchHint: 'Buscar en Categoría 02',
+      buttonText: 'Acción Categoría 02',
       onButtonPressed: () {
-        // Acción para Categoría 2
+        // Acción del botón
       },
+      content: ListView(
+        children: const [
+          ListTile(title: Text('Item 1 de Categoría 02')),
+          ListTile(title: Text('Item 2 de Categoría 02')),
+          // ... más items
+        ],
+      ),
     );
   }
 }

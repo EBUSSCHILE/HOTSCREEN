@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import '../constants/app_constants.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
-import '../widgets/standard_app_bar.dart';
+import 'custom_text_field.dart';
+import 'custom_button.dart';
 
-class BaseCategoryScreen extends StatelessWidget {
+class BaseCategoryScreen extends StatefulWidget {
   final String title;
   final String searchHint;
   final String buttonText;
   final VoidCallback onButtonPressed;
+  final Widget content;
 
   const BaseCategoryScreen({
     super.key,
@@ -16,45 +15,50 @@ class BaseCategoryScreen extends StatelessWidget {
     required this.searchHint,
     required this.buttonText,
     required this.onButtonPressed,
+    required this.content,
   });
+
+  @override
+  State<BaseCategoryScreen> createState() => _BaseCategoryScreenState();
+}
+
+class _BaseCategoryScreenState extends State<BaseCategoryScreen> {
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StandardAppBar(
-        title: title,
+      appBar: AppBar(
+        title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(AppConstants.paddingMedium),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
-              _buildSearchField(),
-              const SizedBox(height: 20),
-              _buildActionButton(),
-              const SizedBox(height: 20),
-              // Aquí puedes agregar más contenido específico de la categoría
-            ],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomTextField(
+              controller: _searchController,
+              hintText: widget.searchHint,
+              icon: Icons.search,
+            ),
           ),
-        ),
+          Expanded(
+            child: widget.content,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomButton(
+              text: widget.buttonText,
+              onPressed: widget.onButtonPressed,
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildSearchField() {
-    return CustomTextField(
-      hintText: searchHint,
-      icon: Icons.search,
-    );
-  }
-
-  Widget _buildActionButton() {
-    return CustomButton(
-      text: buttonText,
-      onPressed: onButtonPressed,
-      size: ButtonSize.large,
-    );
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 }

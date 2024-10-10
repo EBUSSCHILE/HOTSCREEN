@@ -16,6 +16,9 @@ dependencies:
   provider: ^6.0.5
   simple_animations: ^5.0.2
   flutter_colorpicker: ^1.0.3
+  path_provider: ^2.0.15
+  path: ^1.8.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -25,5 +28,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
-    # - assets/icons/app_icon.ico  # Comentamos esta línea si el archivo no existe
+    - assets/images/    
+    - assets/images/hotscreen_sinfondo.png

@@ -1,54 +1,34 @@
 import 'package:flutter/material.dart';
-import '../constants/app_constants.dart';
 
 class CustomTextField extends StatelessWidget {
+  final TextEditingController controller;
   final String hintText;
   final IconData icon;
-  final bool isPassword;
-  final TextEditingController? controller;
-  final ValueChanged<String>? onChanged;
+  final bool obscureText;
 
   const CustomTextField({
     super.key,
+    required this.controller,
     required this.hintText,
     required this.icon,
-    this.isPassword = false,
-    this.controller,
-    this.onChanged,
+    this.obscureText = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width * 0.6;
-    
-    return Center(
-      child: SizedBox(
-        width: width,
-        child: TextField(
-          controller: controller,
-          obscureText: isPassword,
-          onChanged: onChanged,
-          style: const TextStyle(color: AppConstants.darkViolet),
-          decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: TextStyle(color: AppConstants.standardTextColor.withOpacity(0.7)),
-            prefixIcon: Icon(icon, color: AppConstants.darkViolet),
-            filled: true,
-            fillColor: AppConstants.inputBackgroundColor,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-              borderSide: BorderSide(color: AppConstants.darkViolet.withOpacity(0.3)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium),
-              borderSide: const BorderSide(color: AppConstants.darkViolet),
-            ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          hintText: hintText,
+          prefixIcon: Icon(icon, color: Colors.grey),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         ),
       ),
     );
