@@ -5,7 +5,7 @@ import '../constants/app_constants.dart';
 import '../widgets/app_background.dart';
 import '../widgets/settings_button.dart';
 import '../widgets/settings_item.dart';
-import '../widgets/standard_app_bar.dart';
+import '../styles/custom_app_bar.dart'; // Cambiado de standard_app_bar.dart a custom_app_bar.dart
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key}) {
@@ -19,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
     return AppBackground(
       child: Scaffold(
         backgroundColor: AppConstants.backgroundColor,
-        appBar: const StandardAppBar(
+        appBar: const CustomAppBar( // Cambiado de StandardAppBar a CustomAppBar
           title: 'Configuración',
           showBackButton: true,
         ),

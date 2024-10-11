@@ -18,17 +18,17 @@ class BackgroundColorSelector extends StatelessWidget {
         }
       },
       items: [
-        DropdownMenuItem(
+        const DropdownMenuItem(
           value: AppConstants.backgroundColor,
-          child: const Text('Azul Oscuro'),
+          child: Text('Azul Oscuro'),
         ),
-        DropdownMenuItem(
+        const DropdownMenuItem(
           value: AppConstants.darkViolet,
-          child: const Text('Violeta Oscuro'),
+          child: Text('Violeta Oscuro'),
         ),
-        DropdownMenuItem(
+        const DropdownMenuItem(
           value: AppConstants.marengo,
-          child: const Text('Marengo'),
+          child: Text('Marengo'),
         ),
       ],
     );

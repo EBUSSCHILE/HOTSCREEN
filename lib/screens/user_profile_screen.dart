@@ -5,7 +5,7 @@ import '../widgets/app_background.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/full_screen_image_view.dart';
 import '../widgets/info_row.dart';
-import '../widgets/standard_app_bar.dart';
+import '../styles/custom_app_bar.dart'; // Cambiado de standard_app_bar.dart a custom_app_bar.dart
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -15,7 +15,7 @@ class UserProfileScreen extends StatelessWidget {
     return AppBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: const StandardAppBar(
+        appBar: const CustomAppBar(
           title: 'Perfil de Usuario',
           showBackButton: true,
         ),
@@ -64,7 +64,8 @@ class UserProfileScreen extends StatelessWidget {
 
   void _openFullScreenImage(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const FullScreenImageView(imageAsset: 'assets/images/default_avatar.png'),
+      builder: (context) => const FullScreenImageView(
+          imageAsset: 'assets/images/default_avatar.png'),
     ));
   }
 
@@ -82,9 +83,13 @@ class UserProfileScreen extends StatelessWidget {
   Widget _buildUserInfo() {
     return const Column(
       children: [
-        InfoRow(icon: Icons.email, label: 'Correo electrónico', value: 'usuario@ejemplo.com'),
+        InfoRow(
+            icon: Icons.email,
+            label: 'Correo electrónico',
+            value: 'usuario@ejemplo.com'),
         InfoRow(icon: Icons.phone, label: 'Teléfono', value: '+1234567890'),
-        InfoRow(icon: Icons.location_on, label: 'Ubicación', value: 'Ciudad, País'),
+        InfoRow(
+            icon: Icons.location_on, label: 'Ubicación', value: 'Ciudad, País'),
       ],
     );
   }

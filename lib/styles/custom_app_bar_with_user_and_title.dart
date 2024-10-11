@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
-import 'user_icon.dart';
+import 'user_icon_button.dart';  // Cambiado de user_icon.dart a user_icon_button.dart
 
 class CustomAppBarWithUserAndTitle extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -28,10 +28,15 @@ class CustomAppBarWithUserAndTitle extends StatelessWidget implements PreferredS
               onPressed: () => Navigator.of(context).pop(),
             )
           : null,
-      actions: const [
+      actions: [
         Padding(
-          padding: EdgeInsets.only(right: AppConstants.paddingMedium),
-          child: UserIcon(size: 32), // Mantenemos el tamaño ajustado para la AppBar
+          padding: const EdgeInsets.only(right: AppConstants.paddingMedium),
+          child: UserIconButton(
+            size: 32,
+            onTap: () {
+              // Acción al presionar el icono de usuario
+            },
+          ),
         ),
       ],
     );
