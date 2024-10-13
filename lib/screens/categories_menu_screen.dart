@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../widgets/validation_ring.dart';
 import '../widgets/custom_button.dart';
 import '../constants/app_constants.dart';
 import '../styles/custom_app_bar.dart'; // Cambiado de standard_app_bar.dart a custom_app_bar.dart
 import '../services/file_validation_service.dart';
 import 'karaoke_screen.dart';  // Importamos la nueva pantalla
+import '../services/validation_service.dart'; // Cambia esta línea
 
 class CategoriesMenuScreen extends StatelessWidget {
   final List<String> categories;
@@ -67,9 +67,9 @@ class CategoriesMenuScreen extends StatelessWidget {
                                 Positioned(
                                   right: 0,
                                   top: 0,
-                                  child: ValidationRing(
-                                    className: 'CategoriesMenuScreen',
-                                    componentName: 'Category_$idx',
+                                  child: ValidationService.buildValidationRing(
+                                    'CategoriesMenuScreen',
+                                    'Category_$idx',
                                   ),
                                 ),
                               ],
@@ -83,12 +83,12 @@ class CategoriesMenuScreen extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             right: 4,
             top: 4,
-            child: ValidationRing(
-              className: 'CategoriesMenuScreen',
-              componentName: 'CategoriesMenuScreen',
+            child: ValidationService.buildValidationRing(
+              'CategoriesMenuScreen',
+              'CategoriesMenuScreen',
             ),
           ),
         ],

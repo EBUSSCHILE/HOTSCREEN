@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
 import 'user_icon_button.dart'; // Cambiado de user_icon.dart a user_icon_button.dart
-import '../widgets/validation_ring.dart';
+import '../services/validation_service.dart'; // Cambiamos esta importación
 import 'floating_user_menu.dart'; // Asegúrate de que esta importación esté presente
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -71,12 +71,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        const Positioned(
+        Positioned(
           right: 4,
           top: 4,
-          child: ValidationRing(
-            className: 'CustomAppBar',
-            componentName: 'CustomAppBar',
+          child: ValidationService.buildValidationRing(
+            'CustomAppBar',
+            'CustomAppBar',
           ),
         ),
       ],

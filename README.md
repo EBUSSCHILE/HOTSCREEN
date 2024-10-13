@@ -1,19 +1,19 @@
 # HotScreen
 
-HotScreen es una aplicación Flutter desarrollada en Cursor IDE que ofrece una experiencia de usuario interactiva y personalizable para el aprendizaje de idiomas en línea. Esta aplicación es un experimento de desarrollo 100% realizado con Inteligencia Artificial, donde el arquitecto humano actúa como guía y supervisor.
+HotScreen is a Flutter application developed in Cursor IDE that offers an interactive and customizable user experience for online language learning. This application is a development experiment conducted 100% with Artificial Intelligence, where the human architect acts as a guide and supervisor.
 
-## Versión Actual
-v1.1.4 - Adición de la pantalla de Karaoke y mejoras en la estructura del proyecto.
+## Current Version
+v1.1.5 - "Validator Stabilization"
 
-## Características Principales
-- Interfaz de usuario personalizable
-- Sistema de validación de componentes
-- Navegación intuitiva entre pantallas
-- Diseño responsivo y adaptable
-- Aprendizaje de idiomas interactivo
-- Función de Karaoke
+## Main Features
+- Customizable user interface
+- Component validation system
+- Intuitive navigation between screens
+- Responsive and adaptable design
+- Interactive language learning
+- Karaoke function
 
-## Estructura del Proyecto
+## Project Structure
 
 lib/
 ├── config/
@@ -41,35 +41,37 @@ lib/
 ├── index.dart
 └── main.dart
 
-## Componentes Clave
-- **FileValidationService**: Gestiona la validación de componentes.
-- **ValidationWrapper**: Envuelve los widgets para la validación visual.
-- **CustomAppBar**: Barra de aplicación personalizada con UserIcon.
-- **CustomButton**: Botón personalizado con estilos consistentes.
-- **LoginScreen**: Pantalla de inicio de sesión.
-- **CategoriesMenuScreen**: Muestra las categorías de aprendizaje.
-- **HelpScreen**: Proporciona ayuda y soporte al usuario.
-- **KaraokeScreen**: Pantalla de Karaoke interactiva.
+## Key Components
+- **FileValidationService**: Manages component validation.
+- **ValidationWrapper**: Wraps widgets for visual validation.
+- **CustomAppBar**: Custom application bar with UserIcon.
+- **CustomButton**: Custom button with consistent styles.
+- **LoginScreen**: Login screen.
+- **CategoriesMenuScreen**: Displays learning categories.
+- **HelpScreen**: Provides user help and support.
+- **KaraokeScreen**: Interactive Karaoke screen.
 
-## Desarrollo y Contribución
-Este proyecto es un experimento de IA, pero las contribuciones son bienvenidas. Si deseas contribuir:
-1. Haz un fork del repositorio.
-2. Crea una nueva rama para tu feature.
-3. Realiza tus cambios y asegúrate de que los tests pasen.
-4. Envía un pull request con una descripción detallada de tus cambios.
+## Development and Contribution
+This project is an AI experiment, but contributions are welcome. If you wish to contribute:
+1. Fork the repository.
+2. Create a new branch for your feature.
+3. Make your changes and ensure tests pass.
+4. Submit a pull request with a detailed description of your changes.
 
-## Instalación
-1. Asegúrate de tener Flutter instalado en tu sistema.
-2. Clona este repositorio.
-3. Ejecuta `flutter pub get` para instalar las dependencias.
-4. Usa `flutter run` para iniciar la aplicación en modo de desarrollo.
+## Installation
+1. Make sure you have Flutter installed on your system.
+2. Clone this repository.
+3. Run `flutter pub get` to install dependencies.
+4. Run `flutter run` to start the application.
 
-## Licencia
-[Incluir información de licencia aquí]
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Contacto
-Para cualquier consulta o sugerencia, por favor abre un issue en este repositorio.
+## Contact
+For any inquiries or suggestions, please open an issue in this repository.
+
+Thank you for your interest in HotScreen!
 
 ---
 
-Desarrollado con 🧠 por IA y supervisado por humanos.
+Developed with 🧠 by AI and supervised by humans.
