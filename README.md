@@ -3,7 +3,7 @@
 HotScreen is a Flutter application developed in Cursor IDE that offers an interactive and customizable user experience for online language learning. This application is a development experiment conducted 100% with Artificial Intelligence, where the human architect acts as a guide and supervisor.
 
 ## Current Version
-v1.1.5 - "Validator Stabilization"
+v1.1.6 - "Creation of Validations Configuration Screen"
 
 ## Main Features
 - Customizable user interface
@@ -12,44 +12,51 @@ v1.1.5 - "Validator Stabilization"
 - Responsive and adaptable design
 - Interactive language learning
 - Karaoke function
+- Validations configuration screen
 
 ## Project Structure
 
 lib/
 ├── config/
-│ └── app_config.dart
+│   └── app_config.dart
 ├── constants/
-│ └── app_constants.dart
+│   └── app_constants.dart
 ├── screens/
-│ ├── login_screen.dart
-│ ├── categories_menu_screen.dart
-│ ├── karaoke_screen.dart
-│ └── help_screen.dart
+│   ├── login_screen.dart
+│   ├── categories_menu_screen.dart
+│   ├── karaoke_screen.dart
+│   ├── help_screen.dart
+│   ├── settings_screen.dart
+│   └── validations_screen.dart
 ├── services/
-│ └── file_validation_service.dart
+│   ├── file_validation_service.dart
+│   └── validation_service.dart
 ├── styles/
-│ ├── app_styles.dart
-│ ├── custom_app_bar_with_user.dart
-│ └── custom_app_bar_with_user_and_title.dart
+│   ├── app_styles.dart
+│   ├── custom_app_bar.dart
+│   ├── custom_app_bar_with_user.dart
+│   └── custom_app_bar_with_user_and_title.dart
 ├── widgets/
-│ ├── custom_app_bar.dart
-│ ├── custom_button.dart
-│ ├── custom_text_field.dart
-│ ├── user_icon.dart
-│ ├── user_icon_button.dart
-│ └── validation_wrapper.dart
+│   ├── custom_button.dart
+│   ├── custom_text_field.dart
+│   ├── user_icon.dart
+│   ├── user_icon_button.dart
+│   └── validation_wrapper.dart
 ├── index.dart
 └── main.dart
 
 ## Key Components
-- **FileValidationService**: Manages component validation.
+- **ValidationService**: Manages component validation.
+- **FileValidationService**: Handles file-related validation.
 - **ValidationWrapper**: Wraps widgets for visual validation.
-- **CustomAppBar**: Custom application bar with UserIcon.
+- **CustomAppBar**: Customized application bar with UserIcon.
 - **CustomButton**: Custom button with consistent styles.
 - **LoginScreen**: Login screen.
 - **CategoriesMenuScreen**: Displays learning categories.
 - **HelpScreen**: Provides user help and support.
 - **KaraokeScreen**: Interactive Karaoke screen.
+- **SettingsScreen**: General settings screen.
+- **ValidationsScreen**: New screen for configuring validations.
 
 ## Development and Contribution
 This project is an AI experiment, but contributions are welcome. If you wish to contribute:

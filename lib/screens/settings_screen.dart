@@ -6,6 +6,7 @@ import '../widgets/app_background.dart';
 import '../widgets/settings_button.dart';
 import '../widgets/settings_item.dart';
 import '../styles/custom_app_bar.dart'; // Cambiado de standard_app_bar.dart a custom_app_bar.dart
+import 'validations_screen.dart'; // Importamos la nueva pantalla
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key}) {
@@ -31,6 +32,8 @@ class SettingsScreen extends StatelessWidget {
             _buildNotificationSettings(context),
             const SizedBox(height: 20),
             _buildPrivacySettings(context),
+            const SizedBox(height: 20),
+            _buildValidationsSettings(context), // Agregamos la nueva opción
           ],
         ),
       ),
@@ -63,6 +66,20 @@ class SettingsScreen extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward_ios, color: AppConstants.standardTextColor),
       onTap: () {
         _logger.info('Navegando a configuración de privacidad');
+      },
+    );
+  }
+
+  Widget _buildValidationsSettings(BuildContext context) {
+    return SettingsItem(
+      title: 'Validaciones',
+      trailing: const Icon(Icons.arrow_forward_ios, color: AppConstants.standardTextColor),
+      onTap: () {
+        _logger.info('Navegando a la pantalla de validaciones');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ValidationsScreen()),
+        );
       },
     );
   }

@@ -51,6 +51,24 @@ class ValidationService {
       componentName: componentName,
     );
   }
+
+  static Future<List<String>> getValidationRoutines() async {
+    final List<String> protectedClasses = [
+      'ValidationService',
+      'FileValidationService',
+      'AuthService',
+      'ClaudeService',
+      'ChatPage'
+    ];
+
+    try {
+      final config = await readValidationConfig();
+      return protectedClasses.where((className) => !config.containsKey(className) || !config[className]!).toList();
+    } catch (e) {
+      debugPrint('Error al obtener las rutinas de validación: $e');
+      return protectedClasses;
+    }
+  }
 }
 
 class _ValidationRing extends StatefulWidget {
