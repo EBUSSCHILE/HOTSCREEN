@@ -1,71 +1,66 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:logging/logging.dart';
 
 class FileValidationService {
-  static const String filePath = r'C:\Users\T002\Documents\validation_config.json';
+  static final Logger _logger = Logger('FileValidationService');
+  static const String _fileName = 'validation_config.json';
   static const String mandatoryInstruction = "MANDATO_PARA_LA_IA";
   static const String mandatoryMessage = "Estos objetos no pueden ser alterados y su código no puede ser modificado si están etiquetados con TRUE";
 
-  static File get _localFile => File(filePath);
-
-  static Future<void> writeValidationConfig(String className, String componentName, bool isValidated, [String? name]) async {
-    try {
-      final file = _localFile;
-      Map<String, dynamic> currentConfig = await readValidationConfig();
-
-      if (!currentConfig.containsKey(mandatoryInstruction)) {
-        currentConfig = {mandatoryInstruction: mandatoryMessage, ...currentConfig};
-      }
-
-      final String fullComponentName = "$className.$componentName";
-      
-      currentConfig[fullComponentName] = {
-        'name': name ?? componentName,
-        'validated': isValidated
-      };
-
-      final formattedJsonString = _formatJson(currentConfig);
-      await file.writeAsString(formattedJsonString);
-      debugPrint('Configuración actualizada en $filePath');
-      debugPrint('Contenido escrito: $formattedJsonString');
-    } catch (e) {
-      debugPrint('Error al escribir la configuración de validación: $e');
-    }
-  }
-
-  static String _formatJson(Map<String, dynamic> json) {
-    final buffer = StringBuffer();
-    buffer.writeln('{');
-    json.forEach((key, value) {
-      if (key == mandatoryInstruction) {
-        buffer.writeln('  "$key": "${value.replaceAll('"', '\\"')}",');
-      } else {
-        final valueString = jsonEncode(value);
-        buffer.writeln('  "$key": $valueString,');
-      }
-    });
-    String result = buffer.toString().trimRight();
-    if (result.endsWith(',')) {
-      result = result.substring(0, result.length - 1);
-    }
-    result += '\n}';
-    return result;
+  static Future<File> _getLocalFile() async {
+    final directory = await getApplicationDocumentsDirectory();
+    return File('${directory.path}/$_fileName');
   }
 
   static Future<Map<String, dynamic>> readValidationConfig() async {
     try {
-      final file = _localFile;
+      final file = await _getLocalFile();
       if (!await file.exists()) {
-        debugPrint('El archivo de configuración no existe');
-        return {};
+        _logger.info('El archivo de configuración no existe');
+        return {mandatoryInstruction: mandatoryMessage};
       }
       final contents = await file.readAsString();
-      debugPrint('Contenido del archivo: $contents');
+      if (contents.isEmpty) {
+        _logger.info('El archivo de configuración está vacío');
+        return {mandatoryInstruction: mandatoryMessage};
+      }
+      _logger.info('Contenido del archivo: $contents');
       return json.decode(contents) as Map<String, dynamic>;
     } catch (e) {
-      debugPrint('Error al leer la configuración de validación: $e');
-      return {};
+      _logger.warning('Error al leer la configuración de validación: $e');
+      return {mandatoryInstruction: mandatoryMessage};
+    }
+  }
+
+  static Future<void> writeValidationConfig(String className, String componentName, bool isValidated) async {
+    try {
+      final file = await _getLocalFile();
+      Map<String, dynamic> config = await readValidationConfig();
+      final String fullComponentName = "$className.$componentName";
+      config[fullComponentName] = {'validated': isValidated};
+      
+      // Escribir el archivo con cada registro en una nueva línea
+      final buffer = StringBuffer();
+      buffer.writeln('{');
+      config.forEach((key, value) {
+        if (key == mandatoryInstruction) {
+          buffer.writeln('  "$key": "$value",');
+        } else {
+          buffer.writeln('  "$key": ${json.encode(value)},');
+        }
+      });
+      // Eliminar la última coma
+      String content = buffer.toString();
+      content = content.substring(0, content.length - 2);
+      content += '\n}';
+      
+      await file.writeAsString(content);
+      
+      _logger.info('Configuración actualizada para $fullComponentName: $isValidated');
+    } catch (e) {
+      _logger.warning('Error al escribir la configuración de validación: $e');
     }
   }
 
@@ -78,10 +73,10 @@ class FileValidationService {
       final config = await readValidationConfig();
       final String fullComponentName = "$className.$componentName";
       final componentConfig = config[fullComponentName];
-      debugPrint('Configuración para $fullComponentName: $componentConfig');
+      _logger.info('Configuración para $fullComponentName: $componentConfig');
       return componentConfig is Map<String, dynamic> ? componentConfig['validated'] as bool : false;
     } catch (e) {
-      debugPrint('Error al obtener la validación del componente: $e');
+      _logger.warning('Error al obtener la validación del componente: $e');
       return false;
     }
   }

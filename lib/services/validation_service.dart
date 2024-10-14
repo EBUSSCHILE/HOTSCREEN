@@ -2,21 +2,25 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Añadimos esta importación para HapticFeedback
+import 'package:logging/logging.dart';
 import 'file_validation_service.dart';
+import '../constants/validation_constants.dart';  // Importamos las constantes de validación
 
 class ValidationService {
+  static final Logger _logger = Logger('ValidationService');
   static const String _key = 'validation_config';
 
   static Future<Map<String, bool>> readValidationConfig() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final String? jsonString = prefs.getString(_key);
-      if (jsonString != null) {
+      if (jsonString != null && jsonString.isNotEmpty) {
         return Map<String, bool>.from(json.decode(jsonString));
       }
+      _logger.info('Archivo de configuración vacío o no existente');
       return {};
     } catch (e) {
-      debugPrint('Error al leer la configuración de validación: $e');
+      _logger.warning('Error al leer la configuración de validación: $e');
       return {};
     }
   }
@@ -25,30 +29,43 @@ class ValidationService {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_key, json.encode(config));
-      debugPrint('Configuración actualizada');
+      _logger.info('Configuración actualizada');
     } catch (e) {
-      debugPrint('Error al escribir la configuración de validación: $e');
+      _logger.warning('Error al escribir la configuración de validación: $e');
     }
   }
 
-  static Future<void> setComponentValidation(String className, String componentName, bool isValidated) async {
-    final config = await readValidationConfig();
-    final fullComponentName = "$className.$componentName";
-    config[fullComponentName] = isValidated;
-    await writeValidationConfig(config);
-    await FileValidationService.setComponentValidation(className, componentName, isValidated);
+  static Future<void> setComponentValidation(
+      String className, String componentName, bool isValidated) async {
+    await FileValidationService.writeValidationConfig(
+        className, componentName, isValidated);
   }
 
-  static Future<bool> getComponentValidation(String className, String componentName) async {
-    final config = await readValidationConfig();
+  static Future<bool> getComponentValidation(
+      String className, String componentName) async {
+    final config = await FileValidationService.readValidationConfig();
     final fullComponentName = "$className.$componentName";
-    return config[fullComponentName] ?? false;
+    final componentConfig = config[fullComponentName];
+    final isValidated = componentConfig is Map<String, dynamic> ? componentConfig['validated'] as bool : false;
+    _logger.info('Validación de $fullComponentName: $isValidated');
+    return isValidated;
   }
 
   static Widget buildValidationRing(String className, String componentName) {
-    return _ValidationRing(
-      className: className,
-      componentName: componentName,
+    return FutureBuilder<bool>(
+      future: getComponentValidation(className, componentName),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox.shrink();
+        }
+        final isValidated = snapshot.data ?? false;
+        _logger.fine('Componente $className.$componentName validado: $isValidated');
+        return _ValidationRing(
+          className: className,
+          componentName: componentName,
+          initialValidationState: isValidated,
+        );
+      },
     );
   }
 
@@ -58,26 +75,43 @@ class ValidationService {
       'FileValidationService',
       'AuthService',
       'ClaudeService',
+      'NavigationService',
+      'LocalizationService',
+      'ThemeService',
+      'ApiService',
+      'DatabaseService',
+      'LoggingService',
       'ChatPage'
     ];
 
     try {
-      final config = await readValidationConfig();
-      return protectedClasses.where((className) => !config.containsKey(className) || !config[className]!).toList();
+      final config = await FileValidationService.readValidationConfig();
+      _logger.info('Config leída: $config');
+      return protectedClasses;
     } catch (e) {
-      debugPrint('Error al obtener las rutinas de validación: $e');
+      _logger.warning('Error al obtener las rutinas de validación: $e');
       return protectedClasses;
     }
+  }
+
+  static Future<bool> canModifyComponent(String className, String componentName) async {
+    final isValidated = await getComponentValidation(className, componentName);
+    if (isValidated) {
+      _logger.warning('$mandatoryInstruction: Intento de modificar $className.$componentName');
+    }
+    return !isValidated;
   }
 }
 
 class _ValidationRing extends StatefulWidget {
   final String className;
   final String componentName;
+  final bool initialValidationState;
 
   const _ValidationRing({
     required this.className,
     required this.componentName,
+    required this.initialValidationState,
   });
 
   @override
@@ -85,13 +119,14 @@ class _ValidationRing extends StatefulWidget {
 }
 
 class _ValidationRingState extends State<_ValidationRing> {
-  bool _isValidated = false;
+  late bool _isValidated;
   bool _isPressed = false;
 
   @override
   void initState() {
     super.initState();
-    _checkValidation();
+    _isValidated = widget.initialValidationState;
+    _checkValidation(); // Llamamos a _checkValidation al inicializar el estado
   }
 
   Future<void> _checkValidation() async {
@@ -99,9 +134,11 @@ class _ValidationRingState extends State<_ValidationRing> {
       widget.className,
       widget.componentName,
     );
-    setState(() {
-      _isValidated = isValidated;
-    });
+    if (mounted) {
+      setState(() {
+        _isValidated = isValidated;
+      });
+    }
   }
 
   Future<void> _toggleValidation() async {
@@ -111,9 +148,11 @@ class _ValidationRingState extends State<_ValidationRing> {
       widget.componentName,
       newValidationState,
     );
-    setState(() {
-      _isValidated = newValidationState;
-    });
+    if (mounted) {
+      setState(() {
+        _isValidated = newValidationState;
+      });
+    }
   }
 
   @override
@@ -143,7 +182,12 @@ class _ValidationRingState extends State<_ValidationRing> {
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 2),
               boxShadow: _isPressed
-                  ? const [BoxShadow(color: Colors.black26, blurRadius: 10, spreadRadius: 1)]
+                  ? const [
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          spreadRadius: 1)
+                    ]
                   : null,
             ),
           ),

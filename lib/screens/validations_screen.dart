@@ -14,34 +14,43 @@ class ValidationsScreen extends StatelessWidget {
         title: 'Validaciones',
         showBackButton: true,
       ),
-      body: FutureBuilder<List<String>>(
-        future: ValidationService.getValidationRoutines(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No hay rutinas de validación disponibles.'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final routine = snapshot.data![index];
-                return ListTile(
-                  title: Text(
-                    routine,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  trailing: ValidationService.buildValidationRing('ValidationsScreen', routine),
+      body: Stack(
+        children: [
+          FutureBuilder<List<String>>(
+            future: ValidationService.getValidationRoutines(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No hay rutinas de validación disponibles.', style: TextStyle(color: Colors.white)));
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final routine = snapshot.data![index];
+                    return ListTile(
+                      title: Text(
+                        routine,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      trailing: ValidationService.buildValidationRing('ValidationsScreen', routine),
+                    );
+                  },
                 );
-              },
-            );
-          }
-        },
+              }
+            },
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: ValidationService.buildValidationRing('ValidationsScreen', 'Body'),
+          ),
+        ],
       ),
     );
   }

@@ -1,17 +1,18 @@
 # HotScreen
 
-HotScreen is a Flutter application developed in Cursor IDE that offers an interactive and customizable user experience for online language learning. This application is a development experiment conducted 100% with Artificial Intelligence, where the human architect acts as a guide and supervisor.
+HotScreen is an innovative Flutter application developed in Cursor IDE, designed to offer an interactive and customizable user experience for online language learning. This project is a unique development experiment conducted entirely with Artificial Intelligence, where the human architect acts as a guide and supervisor.
 
 ## Current Version
-v1.1.6 - "Creation of Validations Configuration Screen"
+v1.1.7 - "Creation of Whiteboard Screen"
 
 ## Main Features
 - Customizable user interface
 - Component validation system
 - Intuitive navigation between screens
 - Responsive and adaptable design
-- Interactive language learning
+- Interactive language learning modules
 - Karaoke function
+- Whiteboard functionality
 - Validations configuration screen
 
 ## Project Structure
@@ -27,7 +28,8 @@ lib/
 │   ├── karaoke_screen.dart
 │   ├── help_screen.dart
 │   ├── settings_screen.dart
-│   └── validations_screen.dart
+│   ├── validations_screen.dart
+│   └── whiteboard_screen.dart
 ├── services/
 │   ├── file_validation_service.dart
 │   └── validation_service.dart
@@ -56,7 +58,8 @@ lib/
 - **HelpScreen**: Provides user help and support.
 - **KaraokeScreen**: Interactive Karaoke screen.
 - **SettingsScreen**: General settings screen.
-- **ValidationsScreen**: New screen for configuring validations.
+- **ValidationsScreen**: Screen for configuring validations.
+- **WhiteboardScreen**: Interactive whiteboard for drawing and writing.
 
 ## Development and Contribution
 This project is an AI experiment, but contributions are welcome. If you wish to contribute:

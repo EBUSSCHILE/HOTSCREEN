@@ -4,6 +4,7 @@ import '../constants/app_constants.dart';
 import '../styles/custom_app_bar.dart'; // Cambiado de standard_app_bar.dart a custom_app_bar.dart
 import '../services/file_validation_service.dart';
 import 'karaoke_screen.dart';  // Importamos la nueva pantalla
+import 'whiteboard_screen.dart'; // Añadimos esta importación
 import '../services/validation_service.dart'; // Cambia esta línea
 
 class CategoriesMenuScreen extends StatelessWidget {
@@ -46,13 +47,26 @@ class CategoriesMenuScreen extends StatelessWidget {
                                   child: FutureBuilder<String?>(
                                     future: FileValidationService.getComponentName('CategoriesMenuScreen', 'Category_$idx'),
                                     builder: (context, snapshot) {
+                                      String buttonText;
+                                      if (idx == 0) {
+                                        buttonText = 'Karaoke';
+                                      } else if (idx == 1) {
+                                        buttonText = 'Whiteboard';
+                                      } else {
+                                        buttonText = snapshot.data ?? category;
+                                      }
                                       return CustomButton(
-                                        text: idx == 0 ? 'Karaoke' : (snapshot.data ?? category),
+                                        text: buttonText,
                                         onPressed: () {
                                           if (idx == 0) {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(builder: (context) => const KaraokeScreen()),
+                                            );
+                                          } else if (idx == 1) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => const WhiteboardScreen()),
                                             );
                                           } else {
                                             // Acción para otras categorías
