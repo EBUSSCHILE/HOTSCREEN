@@ -3,7 +3,7 @@
 HotScreen is an innovative Flutter application developed in Cursor IDE, designed to offer an interactive and customizable user experience for online language learning. This project is a unique development experiment conducted entirely with Artificial Intelligence, where the human architect acts as a guide and supervisor.
 
 ## Current Version
-v1.1.7 - "Creation of Whiteboard Screen"
+v1.1.8 - "Fix some bugs and Website deployment"
 
 ## Main Features
 - Customizable user interface

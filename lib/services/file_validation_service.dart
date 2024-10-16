@@ -1,33 +1,33 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
+import 'package:path_provider/path_provider.dart';
 
 class FileValidationService {
   static final Logger _logger = Logger('FileValidationService');
-  static const String _fileName = 'validation_config.json';
   static const String mandatoryInstruction = "MANDATO_PARA_LA_IA";
   static const String mandatoryMessage = "Estos objetos no pueden ser alterados y su código no puede ser modificado si están etiquetados con TRUE";
 
-  static Future<File> _getLocalFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File('${directory.path}/$_fileName');
-  }
-
   static Future<Map<String, dynamic>> readValidationConfig() async {
+    if (kReleaseMode) return {};
+    
     try {
-      final file = await _getLocalFile();
-      if (!await file.exists()) {
-        _logger.info('El archivo de configuración no existe');
+      if (kIsWeb) {
+        // Implementación para web (puede ser un mock o usar localStorage)
         return {mandatoryInstruction: mandatoryMessage};
+      } else {
+        // Leer el archivo validation_config.json
+        final directory = await getApplicationDocumentsDirectory();
+        final file = File('${directory.path}/validation_config.json');
+        if (await file.exists()) {
+          final contents = await file.readAsString();
+          return json.decode(contents) as Map<String, dynamic>;
+        } else {
+          _logger.warning('El archivo validation_config.json no existe');
+          return {mandatoryInstruction: mandatoryMessage};
+        }
       }
-      final contents = await file.readAsString();
-      if (contents.isEmpty) {
-        _logger.info('El archivo de configuración está vacío');
-        return {mandatoryInstruction: mandatoryMessage};
-      }
-      _logger.info('Contenido del archivo: $contents');
-      return json.decode(contents) as Map<String, dynamic>;
     } catch (e) {
       _logger.warning('Error al leer la configuración de validación: $e');
       return {mandatoryInstruction: mandatoryMessage};
@@ -35,30 +35,10 @@ class FileValidationService {
   }
 
   static Future<void> writeValidationConfig(String className, String componentName, bool isValidated) async {
+    if (kReleaseMode) return;
+
     try {
-      final file = await _getLocalFile();
-      Map<String, dynamic> config = await readValidationConfig();
-      final String fullComponentName = "$className.$componentName";
-      config[fullComponentName] = {'validated': isValidated};
-      
-      // Escribir el archivo con cada registro en una nueva línea
-      final buffer = StringBuffer();
-      buffer.writeln('{');
-      config.forEach((key, value) {
-        if (key == mandatoryInstruction) {
-          buffer.writeln('  "$key": "$value",');
-        } else {
-          buffer.writeln('  "$key": ${json.encode(value)},');
-        }
-      });
-      // Eliminar la última coma
-      String content = buffer.toString();
-      content = content.substring(0, content.length - 2);
-      content += '\n}';
-      
-      await file.writeAsString(content);
-      
-      _logger.info('Configuración actualizada para $fullComponentName: $isValidated');
+      _logger.info('Configuración actualizada para $className.$componentName: $isValidated');
     } catch (e) {
       _logger.warning('Error al escribir la configuración de validación: $e');
     }
@@ -69,6 +49,7 @@ class FileValidationService {
   }
 
   static Future<bool> getComponentValidation(String className, String componentName) async {
+    if (kReleaseMode) return false;
     try {
       final config = await readValidationConfig();
       final String fullComponentName = "$className.$componentName";
@@ -82,6 +63,7 @@ class FileValidationService {
   }
 
   static Future<String?> getComponentName(String className, String componentName) async {
+    if (kReleaseMode) return null;
     final config = await readValidationConfig();
     final String fullComponentName = "$className.$componentName";
     final componentConfig = config[fullComponentName];

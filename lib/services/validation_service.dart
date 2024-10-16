@@ -5,12 +5,15 @@ import 'package:flutter/services.dart'; // Añadimos esta importación para Hapt
 import 'package:logging/logging.dart';
 import 'file_validation_service.dart';
 import '../constants/validation_constants.dart';  // Importamos las constantes de validación
+import 'package:flutter/foundation.dart';
 
 class ValidationService {
   static final Logger _logger = Logger('ValidationService');
   static const String _key = 'validation_config';
+  static final Map<String, bool> _validationCache = {};
 
   static Future<Map<String, bool>> readValidationConfig() async {
+    if (kReleaseMode) return {};
     try {
       final prefs = await SharedPreferences.getInstance();
       final String? jsonString = prefs.getString(_key);
@@ -26,6 +29,7 @@ class ValidationService {
   }
 
   static Future<void> writeValidationConfig(Map<String, bool> config) async {
+    if (kReleaseMode) return;
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_key, json.encode(config));
@@ -37,39 +41,42 @@ class ValidationService {
 
   static Future<void> setComponentValidation(
       String className, String componentName, bool isValidated) async {
+    if (kReleaseMode) return;
     await FileValidationService.writeValidationConfig(
         className, componentName, isValidated);
   }
 
   static Future<bool> getComponentValidation(
       String className, String componentName) async {
-    final config = await FileValidationService.readValidationConfig();
+    if (kReleaseMode) return false;
+    
     final fullComponentName = "$className.$componentName";
+    if (_validationCache.containsKey(fullComponentName)) {
+      return _validationCache[fullComponentName]!;
+    }
+    
+    final config = await FileValidationService.readValidationConfig();
     final componentConfig = config[fullComponentName];
     final isValidated = componentConfig is Map<String, dynamic> ? componentConfig['validated'] as bool : false;
-    _logger.info('Validación de $fullComponentName: $isValidated');
+    _validationCache[fullComponentName] = isValidated;
+    
+    if (!kReleaseMode) {
+      _logger.info('Validación de $fullComponentName: $isValidated');
+    }
     return isValidated;
   }
 
   static Widget buildValidationRing(String className, String componentName) {
-    return FutureBuilder<bool>(
-      future: getComponentValidation(className, componentName),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox.shrink();
-        }
-        final isValidated = snapshot.data ?? false;
-        _logger.fine('Componente $className.$componentName validado: $isValidated');
-        return _ValidationRing(
-          className: className,
-          componentName: componentName,
-          initialValidationState: isValidated,
-        );
-      },
+    if (kReleaseMode) return const SizedBox.shrink();
+    
+    return _CachedValidationRing(
+      className: className,
+      componentName: componentName,
     );
   }
 
   static Future<List<String>> getValidationRoutines() async {
+    if (kReleaseMode) return [];
     final List<String> protectedClasses = [
       'ValidationService',
       'FileValidationService',
@@ -95,11 +102,56 @@ class ValidationService {
   }
 
   static Future<bool> canModifyComponent(String className, String componentName) async {
+    if (kReleaseMode) return true;
     final isValidated = await getComponentValidation(className, componentName);
     if (isValidated) {
       _logger.warning('$mandatoryInstruction: Intento de modificar $className.$componentName');
     }
     return !isValidated;
+  }
+}
+
+class _CachedValidationRing extends StatefulWidget {
+  final String className;
+  final String componentName;
+
+  const _CachedValidationRing({
+    required this.className,
+    required this.componentName,
+  });
+
+  @override
+  _CachedValidationRingState createState() => _CachedValidationRingState();
+}
+
+class _CachedValidationRingState extends State<_CachedValidationRing> {
+  late Future<bool> _validationFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _validationFuture = ValidationService.getComponentValidation(
+      widget.className,
+      widget.componentName,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _validationFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox.shrink();
+        }
+        final isValidated = snapshot.data ?? false;
+        return _ValidationRing(
+          className: widget.className,
+          componentName: widget.componentName,
+          initialValidationState: isValidated,
+        );
+      },
+    );
   }
 }
 
@@ -157,6 +209,7 @@ class _ValidationRingState extends State<_ValidationRing> {
 
   @override
   Widget build(BuildContext context) {
+    if (kReleaseMode) return const SizedBox.shrink();
     return GestureDetector(
       onTapDown: (_) => setState(() => _isPressed = true),
       onTapUp: (_) => setState(() => _isPressed = false),

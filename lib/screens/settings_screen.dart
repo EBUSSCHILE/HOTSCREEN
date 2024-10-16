@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:flutter/foundation.dart';
 
 import '../constants/app_constants.dart';
 import '../widgets/app_background.dart';
@@ -32,8 +33,8 @@ class SettingsScreen extends StatelessWidget {
             _buildNotificationSettings(context),
             const SizedBox(height: 20),
             _buildPrivacySettings(context),
-            const SizedBox(height: 20),
-            _buildValidationsSettings(context), // Agregamos la nueva opción
+            if (!kReleaseMode)
+              _buildValidationsSettings(context),
           ],
         ),
       ),

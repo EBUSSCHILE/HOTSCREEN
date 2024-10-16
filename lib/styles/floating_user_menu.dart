@@ -47,10 +47,13 @@ class FloatingUserMenu extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Text(
           title,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: 16, // Aumentamos el tamaño de la fuente
+                color: Colors.white, // Aseguramos que el texto sea blanco para mejor contraste
+              ),
         ),
       ),
     );
