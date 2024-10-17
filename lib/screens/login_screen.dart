@@ -3,7 +3,8 @@ import '../widgets/custom_text_field.dart';
 import '../widgets/custom_button.dart';
 import '../services/validation_service.dart';
 import '../constants/app_constants.dart';
-import 'categories_menu_screen.dart'; // Importamos la pantalla de categorías
+import '../utils/version_utils.dart';
+import 'categories_menu_screen.dart'; // Añadimos esta importación
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,13 +16,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final bool _isLoading = false;
 
-  void _handleLogin() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const CategoriesMenuScreen(categories: ['Categoría 1', 'Categoría 2', 'Categoría 3']),
-    ));
-  }
+  // Definimos una lista de categorías de ejemplo
+  final List<String> categories = ['Unidad 1', 'Unidad 2', 'Unidad 3'];
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: fieldWidth,
                         child: CustomButton(
-                          text: _isLoading ? 'Cargando...' : 'LOG IN',
-                          onPressed: _isLoading ? null : _handleLogin,
+                          text: 'LOG IN',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CategoriesMenuScreen(categories: categories),
+                              ),
+                            );
+                          },
                           backgroundColor: const Color(0xFFB71C1C),
                           textColor: Colors.white,
                         ),
@@ -104,7 +108,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       'ForgotPasswordButton',
                       TextButton(
                         onPressed: () {
-                          // Implementar lógica para recuperar contraseña
+                          // Implementar nueva lógica para recuperar contraseña
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Recuperar Contraseña'),
+                                content: const Text('Se enviará un correo con instrucciones para recuperar tu contraseña.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('Cancelar'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Enviar'),
+                                    onPressed: () {
+                                      // Aquí iría la lógica para enviar el correo de recuperación
+                                      Navigator.of(context).pop();
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Correo enviado. Revisa tu bandeja de entrada.')),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         child: const Text(
                           '¿Olvidaste tu contraseña?',
@@ -136,6 +167,17 @@ class _LoginScreenState extends State<LoginScreen> {
             child: ValidationService.buildValidationRing(
               'LoginScreen',
               'LoginScreen',
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 10,
+            child: Text(
+              getAppVersion(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
             ),
           ),
         ],

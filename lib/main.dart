@@ -5,9 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 import 'config/routes.dart';
+import 'services/file_validation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FileValidationService.reformatValidationConfig();
   
   // Configurar el logger
   Logger.root.level = Level.ALL;

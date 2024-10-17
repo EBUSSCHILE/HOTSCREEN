@@ -41,9 +41,9 @@ class ValidationService {
 
   static Future<void> setComponentValidation(
       String className, String componentName, bool isValidated) async {
-    if (kReleaseMode) return;
     await FileValidationService.writeValidationConfig(
         className, componentName, isValidated);
+    // Aquí podrías también actualizar cualquier estado en memoria si es necesario
   }
 
   static Future<bool> getComponentValidation(

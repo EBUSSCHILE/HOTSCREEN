@@ -1,19 +1,17 @@
-# HotScreen
+# HotScreen v1.1.9 "Improved validation system and GitHub update process"
 
-HotScreen is an innovative Flutter application developed in Cursor IDE, designed to offer an interactive and customizable user experience for online language learning. This project is a unique development experiment conducted entirely with Artificial Intelligence, where the human architect acts as a guide and supervisor.
-
-## Current Version
-v1.1.8 - "Fix some bugs and Website deployment"
+HotScreen is an innovative Flutter application developed in Cursor IDE, designed to offer an interactive and customizable user experience for online language learning. This project is a unique development experiment conducted primarily with Artificial Intelligence, where the human architect acts as a guide and supervisor.
 
 ## Main Features
 - Customizable user interface
-- Component validation system
+- Enhanced component validation system
 - Intuitive navigation between screens
 - Responsive and adaptable design
 - Interactive language learning modules
 - Karaoke function
 - Whiteboard functionality
 - Validations configuration screen
+- Automated GitHub update process
 
 ## Project Structure
 
@@ -43,23 +41,33 @@ lib/
 │   ├── custom_text_field.dart
 │   ├── user_icon.dart
 │   ├── user_icon_button.dart
-│   └── validation_wrapper.dart
+│   ├── validation_ring.dart
+│   └── background_color_selector.dart
+├── utils/
+│   ├── version_utils.dart
+│   └── code_modification_helper.dart
 ├── index.dart
 └── main.dart
 
 ## Key Components
 - **ValidationService**: Manages component validation.
-- **FileValidationService**: Handles file-related validation.
-- **ValidationWrapper**: Wraps widgets for visual validation.
+- **FileValidationService**: Handles file-related validation with improved JSON formatting.
+- **ValidationRing**: Widget for visual representation of component validation status.
 - **CustomAppBar**: Customized application bar with UserIcon.
 - **CustomButton**: Custom button with consistent styles.
-- **LoginScreen**: Login screen.
-- **CategoriesMenuScreen**: Displays learning categories.
-- **HelpScreen**: Provides user help and support.
-- **KaraokeScreen**: Interactive Karaoke screen.
-- **SettingsScreen**: General settings screen.
-- **ValidationsScreen**: Screen for configuring validations.
-- **WhiteboardScreen**: Interactive whiteboard for drawing and writing.
+- **LoginScreen**: Enhanced login screen with forgot password functionality.
+- **CategoriesMenuScreen**: Displays learning categories with dynamic content.
+- **BackgroundColorSelector**: New widget for customizing app background color.
+- **VersionUtils**: Utility for managing app version information.
+- **CodeModificationHelper**: Assists in safe code modifications.
+
+## Recent Updates
+- Improved JSON formatting in FileValidationService for better readability.
+- Enhanced ValidationRing widget for more intuitive validation status display.
+- Updated LoginScreen with new forgot password functionality.
+- Added BackgroundColorSelector for app customization.
+- Implemented VersionUtils for easier version management.
+- Created automated GitHub update process using a batch script.
 
 ## Development and Contribution
 This project is an AI experiment, but contributions are welcome. If you wish to contribute:
@@ -73,6 +81,12 @@ This project is an AI experiment, but contributions are welcome. If you wish to 
 2. Clone this repository.
 3. Run `flutter pub get` to install dependencies.
 4. Run `flutter run` to start the application.
+
+## GitHub Update Process
+We've implemented an automated process for updating the GitHub repository:
+1. Update the version in the first line of this README file.
+2. Run the `update_github.bat` script from the project root.
+3. The script will extract the version, commit changes, create a tag, and push to GitHub.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
